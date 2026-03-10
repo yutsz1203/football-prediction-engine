@@ -1,47 +1,47 @@
 {
     "Bayern Munich-M'gladbach": {
-        "Outcome": "Bayern Munich (0.685)",
-        "2.5": "Over (0.6229)",
-        "3.5": "Under (0.5266)"
+        "Outcome": "Bayern Munich (0.6822)",
+        "2.5": "Over (0.6223)",
+        "3.5": "Under (0.5257)"
     },
     "FC Koln-Dortmund": {
-        "Outcome": "Dortmund (0.6111)",
+        "Outcome": "Dortmund (0.6115)",
         "2.5": "Over (0.6045)",
         "3.5": "Under (0.6174)"
     },
     "Freiburg-Leverkusen": {
-        "Outcome": "Leverkusen (0.4451)",
-        "2.5": "Under (0.5291)",
-        "3.5": "Under (0.7459)"
+        "Outcome": "Leverkusen (0.4598)",
+        "2.5": "Under (0.5583)",
+        "3.5": "Under (0.7703)"
     },
     "Heidenheim-Hoffenheim": {
-        "Outcome": "Hoffenheim (0.6949)",
-        "2.5": "Over (0.6141)",
-        "3.5": "Under (0.6046)"
+        "Outcome": "Hoffenheim (0.6963)",
+        "2.5": "Over (0.6170)",
+        "3.5": "Under (0.6011)"
     },
     "Mainz-Stuttgart": {
-        "Outcome": "Stuttgart (0.467)",
-        "2.5": "Over (0.5712)",
-        "3.5": "Under (0.6528)"
+        "Outcome": "Stuttgart (0.4682)",
+        "2.5": "Over (0.5765)",
+        "3.5": "Under (0.6475)"
     },
     "RB Leipzig-Augsburg": {
-        "Outcome": "RB Leipzig (0.5999)",
-        "2.5": "Over (0.5671)",
-        "3.5": "Under (0.6569)"
+        "Outcome": "RB Leipzig (0.5987)",
+        "2.5": "Over (0.5697)",
+        "3.5": "Under (0.6543)"
     },
     "St Pauli-Ein Frankfurt": {
-        "Outcome": "Ein Frankfurt (0.4282)",
-        "2.5": "Over (0.5674)",
-        "3.5": "Under (0.6566)"
+        "Outcome": "Ein Frankfurt (0.43)",
+        "2.5": "Over (0.5728)",
+        "3.5": "Under (0.6513)"
     },
     "Union Berlin-Werder Bremen": {
-        "Outcome": "Union Berlin (0.5286)",
-        "2.5": "Under (0.6418)",
-        "3.5": "Under (0.8341)"
+        "Outcome": "Union Berlin (0.5295)",
+        "2.5": "Under (0.6371)",
+        "3.5": "Under (0.8307)"
     },
     "Wolfsburg-Hamburg": {
-        "Outcome": "Hamburg (0.4089)",
-        "2.5": "Over (0.5715)",
-        "3.5": "Under (0.6525)"
+        "Outcome": "Hamburg (0.3902)",
+        "2.5": "Over (0.5395)",
+        "3.5": "Under (0.6839)"
     }
 }

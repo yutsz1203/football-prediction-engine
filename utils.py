@@ -1,12 +1,12 @@
 import json
 from datetime import date
 
-import requests
 import numpy as np
+import requests
 import soccerdata as sd
-from scipy.stats import t, sem
-from const import leagues, official_base_url, season
+from scipy.stats import sem, t
 
+from const import leagues, official_base_url, season
 
 """
 Documentation: https://fbrapi.com/documentation
@@ -40,6 +40,12 @@ league_id = 9
 # print(Path(__file__).parent)
 # df = pd.read_csv("players/results/player_season_stats.csv")
 # print(df.columns)
+
+
+def load_results():
+    sofascore = sd.Sofascore(leagues=["ESP-La Liga", "GER-Bundesliga"], seasons=season)
+    schedule = sofascore.read_schedule(force_cache=True)
+    print(schedule.dropna())
 
 
 def get_team_id_mapping():
@@ -131,7 +137,3 @@ def ci(data, confidence_level: float = 0.8) -> tuple[float, float]:
     )
 
     return round(ci_lower, 2), round(ci_upper, 2)
-
-
-if __name__ == "__main__":
-    print(get_gameweek())

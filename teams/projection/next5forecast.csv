@@ -1,21 +1,21 @@
 team,opponents,expected_gf,expected_ga
-Man United,"['Newcastle-A', 'Aston Villa-H', 'Bournemouth-A', 'Leeds-H', 'Chelsea-A']",9.06,6.98
-Fulham,"['West Ham-H', ""Nott'm Forest-A"", 'Burnley-H', 'Liverpool-A', 'Brentford-A']",8.97,7.73
-Brentford,"['Bournemouth-A', 'Wolves-H', 'Leeds-A', 'Everton-H', 'Fulham-H']",8.68,6.86
-Liverpool,"['Wolves-A', 'Tottenham-H', 'Brighton-A', 'Fulham-H', 'Everton-A']",8.54,5.47
-Bournemouth,"['Brentford-H', 'Burnley-A', 'Man United-H', 'Arsenal-A', 'Newcastle-A']",8.21,9.71
-Newcastle,"['Man United-H', 'Chelsea-A', 'Sunderland-H', 'Crystal Palace-A', 'Bournemouth-H']",7.7,8.59
-Chelsea,"['Aston Villa-A', 'Newcastle-H', 'Everton-A', 'Man City-H', 'Man United-H']",7.51,6.69
-Leeds,"['Sunderland-H', 'Crystal Palace-A', 'Brentford-H', 'Man United-A', 'Wolves-H']",7.44,6.71
-Arsenal,"['Brighton-A', 'Everton-H', 'Bournemouth-H', 'Man City-A']",7.4,3.89
-Man City,"[""Nott'm Forest-H"", 'West Ham-A', 'Chelsea-A', 'Arsenal-H']",7.06,3.7
-Aston Villa,"['Chelsea-H', 'Man United-A', 'West Ham-H', ""Nott'm Forest-A"", 'Sunderland-H']",6.6,5.08
-Brighton,"['Arsenal-H', 'Sunderland-A', 'Liverpool-H', 'Burnley-A', 'Tottenham-A']",6.3,5.91
-Everton,"['Burnley-H', 'Arsenal-A', 'Chelsea-H', 'Brentford-A', 'Liverpool-H']",5.91,6.97
-Burnley,"['Everton-A', 'Bournemouth-H', 'Fulham-A', 'Brighton-H', ""Nott'm Forest-A""]",5.79,9.57
-West Ham,"['Fulham-A', 'Man City-H', 'Aston Villa-A', 'Wolves-H', 'Crystal Palace-A']",5.76,8.66
-Tottenham,"['Crystal Palace-H', 'Liverpool-A', ""Nott'm Forest-H"", 'Sunderland-A', 'Brighton-H']",5.65,6.92
-Crystal Palace,"['Tottenham-A', 'Leeds-H', 'Newcastle-H', 'West Ham-H']",5.03,5.3
-Nott'm Forest,"['Man City-A', 'Fulham-H', 'Tottenham-A', 'Aston Villa-H', 'Burnley-H']",4.88,6.86
-Sunderland,"['Leeds-A', 'Brighton-H', 'Newcastle-A', 'Tottenham-H', 'Aston Villa-A']",4.81,6.34
-Wolves,"['Liverpool-H', 'Brentford-A', 'West Ham-A', 'Leeds-A']",3.28,6.63
+Liverpool,"['Tottenham-H', 'Brighton-A', 'Fulham-H', 'Everton-A', 'Crystal Palace-H']",8.67,5.94
+Man United,"['Aston Villa-H', 'Bournemouth-A', 'Leeds-H', 'Chelsea-A', 'Brentford-H']",8.62,6.95
+Chelsea,"['Newcastle-H', 'Everton-A', 'Man City-H', 'Man United-H', 'Brighton-A']",8.6,6.7
+Arsenal,"['Everton-H', 'Bournemouth-H', 'Man City-A', 'Newcastle-H']",8.12,3.63
+Bournemouth,"['Burnley-A', 'Man United-H', 'Arsenal-A', 'Newcastle-A', 'Leeds-H']",7.59,8.45
+Brentford,"['Wolves-H', 'Leeds-A', 'Everton-H', 'Fulham-H', 'Man United-A']",7.53,6.25
+Man City,"['West Ham-A', 'Chelsea-A', 'Arsenal-H', 'Burnley-A']",7.5,4.58
+Fulham,"[""Nott'm Forest-A"", 'Burnley-H', 'Liverpool-A', 'Brentford-A', 'Aston Villa-H']",7.46,7.5
+Newcastle,"['Chelsea-A', 'Sunderland-H', 'Crystal Palace-A', 'Bournemouth-H', 'Arsenal-A']",6.9,9.24
+Aston Villa,"['Man United-A', 'West Ham-H', ""Nott'm Forest-A"", 'Sunderland-H', 'Fulham-A']",6.62,6.02
+Leeds,"['Crystal Palace-A', 'Brentford-H', 'Man United-A', 'Wolves-H', 'Bournemouth-A']",6.62,7.41
+Brighton,"['Sunderland-A', 'Liverpool-H', 'Burnley-A', 'Tottenham-A', 'Chelsea-H']",6.57,5.53
+Nott'm Forest,"['Fulham-H', 'Tottenham-A', 'Aston Villa-H', 'Burnley-H', 'Sunderland-A']",5.96,5.85
+West Ham,"['Man City-H', 'Aston Villa-A', 'Wolves-H', 'Crystal Palace-A', 'Everton-H']",5.63,7.61
+Tottenham,"['Liverpool-A', ""Nott'm Forest-H"", 'Sunderland-A', 'Brighton-H', 'Wolves-A']",5.5,7.68
+Everton,"['Arsenal-A', 'Chelsea-H', 'Brentford-A', 'Liverpool-H', 'West Ham-A']",5.47,6.9
+Burnley,"['Bournemouth-H', 'Fulham-A', 'Brighton-H', ""Nott'm Forest-A"", 'Man City-H']",5.36,10.0
+Crystal Palace,"['Leeds-H', 'Newcastle-H', 'West Ham-H', 'Liverpool-A']",5.22,5.66
+Sunderland,"['Brighton-H', 'Newcastle-A', 'Tottenham-H', 'Aston Villa-A', ""Nott'm Forest-H""]",5.09,5.47
+Wolves,"['Brentford-A', 'West Ham-A', 'Leeds-A', 'Tottenham-H']",3.88,5.55

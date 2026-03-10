@@ -1,52 +1,52 @@
 {
     "Ath Bilbao-Barcelona": {
-        "Outcome": "Barcelona (0.6368)",
-        "2.5": "Over (0.6288)",
-        "3.5": "Under (0.5893)"
+        "Outcome": "Barcelona (0.6303)",
+        "2.5": "Over (0.6229)",
+        "3.5": "Under (0.5963)"
     },
     "Ath Madrid-Sociedad": {
-        "Outcome": "Ath Madrid (0.5599)",
-        "2.5": "Over (0.5287)",
-        "3.5": "Under (0.6944)"
+        "Outcome": "Ath Madrid (0.5655)",
+        "2.5": "Over (0.5254)",
+        "3.5": "Under (0.6975)"
     },
     "Celta-Real Madrid": {
-        "Outcome": "Real Madrid (0.3992)",
-        "2.5": "Under (0.5520)",
-        "3.5": "Under (0.7650)"
+        "Outcome": "Real Madrid (0.3968)",
+        "2.5": "Under (0.5543)",
+        "3.5": "Under (0.7668)"
     },
     "Espanol-Oviedo": {
-        "Outcome": "Espanol (0.5739)",
-        "2.5": "Under (0.5016)",
-        "3.5": "Under (0.7224)"
+        "Outcome": "Espanol (0.6205)",
+        "2.5": "Over (0.5152)",
+        "3.5": "Under (0.7072)"
     },
     "Getafe-Betis": {
-        "Outcome": "Betis (0.3563)",
-        "2.5": "Under (0.7196)",
-        "3.5": "Under (0.8849)"
+        "Outcome": "Betis (0.3539)",
+        "2.5": "Under (0.7226)",
+        "3.5": "Under (0.8867)"
     },
     "Levante-Girona": {
-        "Outcome": "Levante (0.3655)",
-        "2.5": "Under (0.5877)",
-        "3.5": "Under (0.7935)"
+        "Outcome": "Levante (0.3713)",
+        "2.5": "Under (0.5876)",
+        "3.5": "Under (0.7934)"
     },
     "Osasuna-Mallorca": {
-        "Outcome": "Osasuna (0.6101)",
-        "2.5": "Under (0.5410)",
-        "3.5": "Under (0.7569)"
+        "Outcome": "Osasuna (0.6125)",
+        "2.5": "Under (0.5436)",
+        "3.5": "Under (0.7590)"
     },
     "Sevilla-Vallecano": {
-        "Outcome": "Sevilla (0.4355)",
-        "2.5": "Under (0.5735)",
-        "3.5": "Under (0.7825)"
+        "Outcome": "Sevilla (0.3943)",
+        "2.5": "Under (0.5531)",
+        "3.5": "Under (0.7659)"
     },
     "Valencia-Alaves": {
-        "Outcome": "Valencia (0.522)",
-        "2.5": "Under (0.6360)",
-        "3.5": "Under (0.8299)"
+        "Outcome": "Valencia (0.5269)",
+        "2.5": "Under (0.6366)",
+        "3.5": "Under (0.8304)"
     },
     "Villarreal-Elche": {
-        "Outcome": "Villarreal (0.6603)",
-        "2.5": "Over (0.6626)",
-        "3.5": "Under (0.5457)"
+        "Outcome": "Villarreal (0.6637)",
+        "2.5": "Over (0.6633)",
+        "3.5": "Under (0.5444)"
     }
 }

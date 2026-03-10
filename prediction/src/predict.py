@@ -1,5 +1,6 @@
 import ast
 import json
+from datetime import datetime
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -131,10 +132,187 @@ def process_predict(proba: list, home: str, away: str) -> tuple[dict, dict]:
     return long_info, short_info
 
 
+# add a field that records the date of the most recent match included in calculation for each leagues
+# use this date to fetch matches after this one
+
+
 def calc_accuracy():
     sofascore = sd.Sofascore(leagues=leagues, seasons=season)
     results = sofascore.read_schedule(force_cache=True)
-    gameweeks = get_gameweek()
+    results["date"] = results["date"].dt.tz_localize(None).dt.date
+
+    df = pd.read_csv("prediction/output/accuracy.csv", index_col=0)
+
+    for league in leagues:
+        league_code, league_name = league.split("-")
+        (
+            latest_date,
+            total_matches,
+            correct_outcome,
+            correct_outcome_min,
+            correct_outcome_max,
+            correct_outcome_avg,
+            correct_2_5,
+            correct_2_5_min,
+            correct_2_5_max,
+            correct_2_5_avg,
+            correct_3_5,
+            correct_3_5_min,
+            correct_3_5_max,
+            correct_3_5_avg,
+        ) = df.loc[league].values
+
+        latest_date = datetime.strptime(latest_date, "%Y-%m-%d").date()
+
+        result_df = results.query("league == @league and date > @latest_date").dropna()
+
+        if result_df.empty:
+            print(f"No results fetched for {league_name}.")
+            continue
+
+        curr_correct_outcome, curr_correct_2_5, curr_correct_3_5, curr_total = (
+            0,
+            0,
+            0,
+            0,
+        )
+
+        curr_correct_outcome_probs, curr_correct_2_5_probs, curr_correct_3_5_probs = (
+            [],
+            [],
+            [],
+        )
+
+        gw = result_df.iloc[0]["week"]
+        prediction = read_predictions(league_code, league_name, gw)
+
+        for index, row in result_df.iterrows():
+            if row["week"] != gw:
+                gw = row["week"]
+                prediction = read_predictions(league_code, league_name, gw)
+            if not prediction:
+                print(f"No predictions found for {league_name} on gw{row['week']}.")
+                continue
+            match_prediction = prediction[index[2].split(" ", maxsplit=1)[1]]
+            home_score = row["home_score"]
+            away_score = row["away_score"]
+            total_goals = home_score + away_score
+
+            if home_score > away_score:
+                outcome = row["home_team"]
+                outcome_side = "Home"
+            elif away_score > home_score:
+                outcome = row["away_team"]
+                outcome_side = "Away"
+            else:
+                outcome = "Draw"
+                outcome_side = outcome
+
+            if outcome == match_prediction["Predicted Outcome"]:
+                curr_correct_outcome += 1
+                curr_correct_outcome_probs.append(
+                    match_prediction[f"{outcome_side} Probability"]
+                )
+
+            if (
+                match_prediction["Over 2.5"] > match_prediction["Under 2.5"]
+                and total_goals > 2.5
+            ):
+                curr_correct_2_5 += 1
+                curr_correct_2_5_probs.append(match_prediction["Over 2.5"])
+            elif (
+                match_prediction["Over 2.5"] < match_prediction["Under 2.5"]
+                and total_goals < 2.5
+            ):
+                curr_correct_2_5 += 1
+                curr_correct_2_5_probs.append(match_prediction["Under 2.5"])
+
+            if (
+                match_prediction["Over 3.5"] > match_prediction["Under 3.5"]
+                and total_goals > 3.5
+            ):
+                curr_correct_3_5 += 1
+                curr_correct_3_5_probs.append(match_prediction["Over 3.5"])
+            elif (
+                match_prediction["Over 3.5"] < match_prediction["Under 3.5"]
+                and total_goals < 3.5
+            ):
+                curr_correct_3_5 += 1
+                curr_correct_3_5_probs.append(match_prediction["Under 3.5"])
+
+            curr_total += 1
+
+        curr_correct_outcome_probs = [
+            round(x * 100, 2) for x in curr_correct_outcome_probs
+        ]
+        curr_correct_2_5_probs = [round(x * 100, 2) for x in curr_correct_2_5_probs]
+        curr_correct_3_5_probs = [round(x * 100, 2) for x in curr_correct_3_5_probs]
+
+        league_df = df.loc[league].copy()
+        league_df["latest_date"] = result_df.iloc[-1]["date"]
+        league_df["total_matches"] = total_matches + curr_total
+
+        league_df["correct_outcome"] = (
+            ((correct_outcome / 100) * total_matches + curr_correct_outcome)
+            / (total_matches + curr_total)
+            * 100
+        )
+        league_df["correct_outcome_min"] = min(
+            correct_outcome_min, min(curr_correct_outcome_probs)
+        )
+        league_df["correct_outcome_max"] = max(
+            correct_outcome_max, max(curr_correct_outcome_probs)
+        )
+        league_df["correct_outcome_avg"] = (
+            correct_outcome_avg * (correct_outcome / 100 * total_matches)
+            + sum(curr_correct_outcome_probs)
+        ) / (correct_outcome / 100 * total_matches + curr_correct_outcome)
+
+        league_df["correct_2_5"] = (
+            ((correct_2_5 / 100) * total_matches + curr_correct_2_5)
+            / (total_matches + curr_total)
+            * 100
+        )
+        league_df["correct_2_5_min"] = min(correct_2_5_min, min(curr_correct_2_5_probs))
+        league_df["correct_2_5_max"] = max(correct_2_5_max, max(curr_correct_2_5_probs))
+        league_df["correct_2_5_avg"] = (
+            correct_2_5_avg * (correct_2_5 / 100 * total_matches)
+            + sum(curr_correct_2_5_probs)
+        ) / (correct_2_5 / 100 * total_matches + curr_correct_2_5)
+
+        league_df["correct_3_5"] = (
+            ((correct_3_5 / 100) * total_matches + curr_correct_3_5)
+            / (total_matches + curr_total)
+            * 100
+        )
+        league_df["correct_3_5_min"] = min(correct_3_5_min, min(curr_correct_3_5_probs))
+        league_df["correct_3_5_max"] = max(correct_3_5_max, max(curr_correct_3_5_probs))
+        league_df["correct_3_5_avg"] = (
+            correct_3_5_avg * (correct_3_5 / 100 * total_matches)
+            + sum(curr_correct_3_5_probs)
+        ) / (correct_3_5 / 100 * total_matches + curr_correct_3_5)
+
+        df.loc[league] = league_df.values
+
+    df = df.round(2)
+    df.sort_values(
+        ["correct_2_5", "correct_3_5", "correct_outcome"], ascending=False, inplace=True
+    )
+    df.to_csv("prediction/output/accuracy.csv")
+    print(df)
+
+
+def init_calc_accuracy():
+    sofascore = sd.Sofascore(leagues=leagues, seasons=season)
+    results = sofascore.read_schedule(force_cache=True)
+    # gameweeks = get_gameweek()
+    gameweeks = {
+        "ENG-Premier League": "28",
+        "ESP-La Liga": "26",
+        "FRA-Ligue 1": "24",
+        "GER-Bundesliga": "24",
+        "ITA-Serie A": "27",
+    }
     res = []
 
     for league in leagues:
@@ -212,23 +390,33 @@ def calc_accuracy():
         correct_2_5_rate = round(((correct_2_5 / total_matches) * 100), 2)
         correct_3_5_rate = round(((correct_3_5 / total_matches) * 100), 2)
 
-        # print(f"Results for {league_name}")
-        # print(f"Total matches: {total_matches}")
-        # print(f"Outcome: {correct_outcome_rate}")
-        # print(f"2.5: {correct_2_5_rate}")
-        # print(f"3.5: {correct_3_5_rate}")
-        # print("\n")
+        correct_outcome_probs = [round(x * 100, 2) for x in correct_outcome_probs]
+        correct_2_5_probs = [round(x * 100, 2) for x in correct_2_5_probs]
+        correct_3_5_probs = [round(x * 100, 2) for x in correct_3_5_probs]
 
         res.append(
             {
                 "league": league,
+                "latest_date": result_df.iloc[-1]["date"].strftime("%Y-%m-%d"),
                 "total_matches": total_matches,
-                "correct_outcome": correct_outcome_rate,
-                "correct_outcome_levels": [ci(correct_outcome_probs)],
-                "correct_2_5": correct_2_5_rate,
-                "correct_2_5_levels": [ci(correct_2_5_probs)],
-                "correct_3_5": correct_3_5_rate,
-                "correct_3_5_levels": [ci(correct_3_5_probs)],
+                "correct_outcome": round(correct_outcome_rate, 2),
+                "correct_outcome_min": min(correct_outcome_probs),
+                "correct_outcome_max": max(correct_outcome_probs),
+                "correct_outcome_avg": round(
+                    sum(correct_outcome_probs) / len(correct_outcome_probs), 2
+                ),
+                "correct_2_5": round(correct_2_5_rate, 2),
+                "correct_2_5_min": min(correct_2_5_probs),
+                "correct_2_5_max": max(correct_2_5_probs),
+                "correct_2_5_avg": round(
+                    sum(correct_2_5_probs) / len(correct_2_5_probs), 2
+                ),
+                "correct_3_5": round(correct_3_5_rate, 2),
+                "correct_3_5_min": min(correct_3_5_probs),
+                "correct_3_5_max": max(correct_3_5_probs),
+                "correct_3_5_avg": round(
+                    sum(correct_3_5_probs) / len(correct_3_5_probs), 2
+                ),
             }
         )
     df = pd.DataFrame(res)
@@ -239,10 +427,34 @@ def calc_accuracy():
     print(df)
 
 
-def log_results():
+def read_predictions(league_code, league_name, gw) -> dict[str, dict] | None:
+    try:
+        with open(
+            f"prediction/data/{league_code}/{league_code}_gw{gw}_long.json",
+            "r",
+            encoding="utf-8",
+        ) as file:
+            prediction = json.load(file)
+            return prediction
+    except FileNotFoundError as e:
+        print(f"{e}: No prediction found for {league_name} gw{gw}.")
+        return None
+
+
+# Add latest_date field
+# Filter matches after latest_date
+
+
+def init_log_results():
     sofascore = sd.Sofascore(leagues=leagues, seasons=season)
     results = sofascore.read_schedule(force_cache=True)
-    gameweeks = get_gameweek("prev")
+    gameweeks = {
+        "ENG-Premier League": "28",
+        "ESP-La Liga": "26",
+        "FRA-Ligue 1": "24",
+        "GER-Bundesliga": "24",
+        "ITA-Serie A": "27",
+    }
     res = []
 
     for league in leagues:
@@ -252,15 +464,19 @@ def log_results():
         result_df = results.query("league == @league and week == @gw").dropna()
 
         if result_df.empty:
-            print(f"Error: No results fetched for {league}")
-            return
+            print(f"Error: No results fetched for {league} on {gw}")
+            continue
 
-        with open(
-            f"prediction/data/{league_code}/{league_code}_gw{gw}_long.json",
-            "r",
-            encoding="utf-8",
-        ) as file:
-            prediction = json.load(file)
+        try:
+            with open(
+                f"prediction/data/{league_code}/{league_code}_gw{gw}_long.json",
+                "r",
+                encoding="utf-8",
+            ) as file:
+                prediction = json.load(file)
+        except FileNotFoundError as e:
+            print(f"{e}: No prediction found for {league_name} gw {gw}.")
+            continue
 
         for match, match_info in prediction.items():
             match_result = result_df.loc[
@@ -280,39 +496,48 @@ def log_results():
                 u_3_5_outcome = 1 if total_goals < 3.5 else 0
                 o_3_5_outcome = 1 if total_goals > 3.5 else 0
 
+                latest_date = pd.to_datetime(match_result["date"].values[0]).date()
+
                 res.extend(
                     [
                         {
+                            "latest_date": latest_date,
                             "predicted_prob": match_info["Home Probability"],
                             "outcome": home_outcome,
                             "market_type": "moneyline",
                         },
                         {
+                            "latest_date": latest_date,
                             "predicted_prob": match_info["Away Probability"],
                             "outcome": away_outcome,
                             "market_type": "moneyline",
                         },
                         {
+                            "latest_date": latest_date,
                             "predicted_prob": match_info["Draw Probability"],
                             "outcome": draw_outcome,
                             "market_type": "moneyline",
                         },
                         {
+                            "latest_date": latest_date,
                             "predicted_prob": match_info["Over 2.5"],
                             "outcome": o_2_5_outcome,
                             "market_type": "2_5",
                         },
                         {
+                            "latest_date": latest_date,
                             "predicted_prob": match_info["Under 2.5"],
                             "outcome": u_2_5_outcome,
                             "market_type": "2_5",
                         },
                         {
+                            "latest_date": latest_date,
                             "predicted_prob": match_info["Over 3.5"],
                             "outcome": o_3_5_outcome,
                             "market_type": "3_5",
                         },
                         {
+                            "latest_date": latest_date,
                             "predicted_prob": match_info["Under 3.5"],
                             "outcome": u_3_5_outcome,
                             "market_type": "3_5",
@@ -321,7 +546,109 @@ def log_results():
                 )
 
     df = pd.DataFrame(res)
-    df.sort_values(["market_type"], inplace=True)
+    df.sort_values(by="latest_date", ascending=False, inplace=True)
+    df.to_csv("prediction/output/log.csv", index=False)
+    print(df)
+
+
+def log_results():
+    sofascore = sd.Sofascore(leagues=leagues, seasons=season)
+    results = sofascore.read_schedule(force_cache=True)
+    results["date"] = results["date"].dt.tz_localize(None).dt.date
+
+    prev_log_df = pd.read_csv("prediction/output/log.csv")
+    latest_date = prev_log_df["latest_date"].max()
+    latest_date = datetime.strptime(latest_date, "%Y-%m-%d").date()
+
+    res = []
+
+    for league in leagues:
+        league_code, league_name = league.split("-")
+
+        result_df = results.query("league == @league and date > @latest_date").dropna()
+
+        if result_df.empty:
+            print(f"Error: No results fetched for {league}")
+            continue
+
+        gw = result_df.iloc[0]["week"]
+        prediction = read_predictions(league_code, league_name, gw)
+
+        if not prediction:
+            print(f"No predictions found for {league_name} on gw{gw}.")
+            continue
+
+        for index, row in result_df.iterrows():
+            if row["week"] != gw:
+                gw = row["week"]
+                prediction = read_predictions(league_code, league_name, gw)
+            if not prediction:
+                print(f"No predictions found for {league_name} on gw{row['week']}.")
+                break
+            match_prediction = prediction[index[2].split(" ", maxsplit=1)[1]]
+
+            home_score = row["home_score"]
+            away_score = row["away_score"]
+            total_goals = home_score + away_score
+
+            home_outcome = 1 if home_score > away_score else 0
+            away_outcome = 1 if away_score > home_score else 0
+            draw_outcome = 1 if home_score == away_score else 0
+
+            u_2_5_outcome = 1 if total_goals < 2.5 else 0
+            o_2_5_outcome = 1 if total_goals > 2.5 else 0
+            u_3_5_outcome = 1 if total_goals < 3.5 else 0
+            o_3_5_outcome = 1 if total_goals > 3.5 else 0
+
+            res.extend(
+                [
+                    {
+                        "latest_date": row["date"],
+                        "predicted_prob": match_prediction["Home Probability"],
+                        "outcome": home_outcome,
+                        "market_type": "moneyline",
+                    },
+                    {
+                        "latest_date": row["date"],
+                        "predicted_prob": match_prediction["Away Probability"],
+                        "outcome": away_outcome,
+                        "market_type": "moneyline",
+                    },
+                    {
+                        "latest_date": row["date"],
+                        "predicted_prob": match_prediction["Draw Probability"],
+                        "outcome": draw_outcome,
+                        "market_type": "moneyline",
+                    },
+                    {
+                        "latest_date": row["date"],
+                        "predicted_prob": match_prediction["Over 2.5"],
+                        "outcome": o_2_5_outcome,
+                        "market_type": "2_5",
+                    },
+                    {
+                        "latest_date": row["date"],
+                        "predicted_prob": match_prediction["Under 2.5"],
+                        "outcome": u_2_5_outcome,
+                        "market_type": "2_5",
+                    },
+                    {
+                        "latest_date": row["date"],
+                        "predicted_prob": match_prediction["Over 3.5"],
+                        "outcome": o_3_5_outcome,
+                        "market_type": "3_5",
+                    },
+                    {
+                        "latest_date": row["date"],
+                        "predicted_prob": match_prediction["Under 3.5"],
+                        "outcome": u_3_5_outcome,
+                        "market_type": "3_5",
+                    },
+                ]
+            )
+
+    prev_log_df = pd.read_csv("prediction/output/log.csv")
+    df = pd.concat([pd.DataFrame(res), prev_log_df])
     df.to_csv("prediction/output/log.csv", index=False)
     print(df)
 
@@ -356,6 +683,7 @@ def plot_calibration():
     plt.plot(mpb, fop, marker=".", label="Overall")
     plt.xlabel("Mean predicted probability")
     plt.ylabel("Fraction of positives")
+    plt.title(f"Calibration Curves as at {df['latest_date'].max()}")
 
     counts, _ = np.histogram(df["predicted_prob"], bins=bin_edges)
     print("\nOverall — Sample size per bin:")
@@ -365,8 +693,8 @@ def plot_calibration():
         zip(bin_edges[:-1], bin_edges[1:], counts)
     ):
         print(f"  {edge_low:.2f} - {edge_high:.2f}        | {count:>6} |")
-
     plt.legend()
+    plt.savefig("prediction/output/calibration_curves.png")
     plt.show()
 
 
