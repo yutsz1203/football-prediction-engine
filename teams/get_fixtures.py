@@ -77,7 +77,7 @@ def get_fixtures():
             flat_data.append(
                 {
                     "team": row["home_team"],
-                    "opponent": f"{row["away_team"]}-H",
+                    "opponent": f"{row['away_team']}-H",
                     "gw": row["week"],
                 }
             )
@@ -85,7 +85,7 @@ def get_fixtures():
             flat_data.append(
                 {
                     "team": row["away_team"],
-                    "opponent": f"{row["home_team"]}-A",
+                    "opponent": f"{row['home_team']}-A",
                     "gw": row["week"],
                 }
             )

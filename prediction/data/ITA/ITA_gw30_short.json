@@ -1,0 +1,52 @@
+{
+    "Atalanta-Verona": {
+        "Outcome": "Atalanta (0.7638)",
+        "2.5": "Over (0.5217)",
+        "3.5": "Under (0.7021)"
+    },
+    "Bologna-Lazio": {
+        "Outcome": "Bologna (0.355)",
+        "2.5": "Under (0.7214)",
+        "3.5": "Under (0.8860)"
+    },
+    "Cagliari-Napoli": {
+        "Outcome": "Napoli (0.5314)",
+        "2.5": "Over (0.5090)",
+        "3.5": "Under (0.7125)"
+    },
+    "Como-Pisa": {
+        "Outcome": "Como (0.7793)",
+        "2.5": "Over (0.5666)",
+        "3.5": "Under (0.6557)"
+    },
+    "Fiorentina-Inter": {
+        "Outcome": "Inter (0.7037)",
+        "2.5": "Over (0.5908)",
+        "3.5": "Under (0.6310)"
+    },
+    "Genoa-Udinese": {
+        "Outcome": "Genoa (0.4564)",
+        "2.5": "Under (0.5069)",
+        "3.5": "Under (0.7266)"
+    },
+    "Juventus-Sassuolo": {
+        "Outcome": "Juventus (0.6643)",
+        "2.5": "Over (0.6097)",
+        "3.5": "Under (0.6107)"
+    },
+    "Milan-Torino": {
+        "Outcome": "Milan (0.6986)",
+        "2.5": "Over (0.5161)",
+        "3.5": "Under (0.7069)"
+    },
+    "Parma-Cremonese": {
+        "Outcome": "Parma (0.4573)",
+        "2.5": "Under (0.7683)",
+        "3.5": "Under (0.9134)"
+    },
+    "Roma-Lecce": {
+        "Outcome": "Roma (0.6288)",
+        "2.5": "Under (0.6252)",
+        "3.5": "Under (0.8230)"
+    }
+}

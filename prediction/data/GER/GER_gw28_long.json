@@ -1,0 +1,110 @@
+{
+    "Ein Frankfurt-FC Koln": {
+        "Predicted Outcome": "Ein Frankfurt",
+        "Home Probability": 0.5409,
+        "Away Probability": 0.2271,
+        "Draw Probability": 0.2108,
+        "Most likely score": "2-1",
+        "Most likely score probability": 0.0966,
+        "Over 2.5": 0.626,
+        "Under 2.5": 0.374,
+        "Over 3.5": 0.4058,
+        "Under 3.5": 0.5942
+    },
+    "Freiburg-Bayern Munich": {
+        "Predicted Outcome": "Bayern Munich",
+        "Home Probability": 0.0852,
+        "Away Probability": 0.6875,
+        "Draw Probability": 0.1196,
+        "Most likely score": "1-3",
+        "Most likely score probability": 0.0818,
+        "Over 2.5": 0.6891,
+        "Under 2.5": 0.3109,
+        "Over 3.5": 0.5068,
+        "Under 3.5": 0.4932
+    },
+    "Hamburg-Augsburg": {
+        "Predicted Outcome": "Hamburg",
+        "Home Probability": 0.4929,
+        "Away Probability": 0.2441,
+        "Draw Probability": 0.2576,
+        "Most likely score": "1-0",
+        "Most likely score probability": 0.1238,
+        "Over 2.5": 0.4535,
+        "Under 2.5": 0.5465,
+        "Over 3.5": 0.2393,
+        "Under 3.5": 0.7607
+    },
+    "Hoffenheim-Mainz": {
+        "Predicted Outcome": "Hoffenheim",
+        "Home Probability": 0.5043,
+        "Away Probability": 0.2547,
+        "Draw Probability": 0.2277,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1046,
+        "Over 2.5": 0.5825,
+        "Under 2.5": 0.4175,
+        "Over 3.5": 0.3587,
+        "Under 3.5": 0.6413
+    },
+    "Leverkusen-Wolfsburg": {
+        "Predicted Outcome": "Leverkusen",
+        "Home Probability": 0.701,
+        "Away Probability": 0.0955,
+        "Draw Probability": 0.143,
+        "Most likely score": "2-0",
+        "Most likely score probability": 0.0993,
+        "Over 2.5": 0.6428,
+        "Under 2.5": 0.3572,
+        "Over 3.5": 0.4315,
+        "Under 3.5": 0.5685
+    },
+    "M'gladbach-Heidenheim": {
+        "Predicted Outcome": "M'gladbach",
+        "Home Probability": 0.5859,
+        "Away Probability": 0.188,
+        "Draw Probability": 0.2041,
+        "Most likely score": "2-1",
+        "Most likely score probability": 0.0988,
+        "Over 2.5": 0.6006,
+        "Under 2.5": 0.3994,
+        "Over 3.5": 0.3782,
+        "Under 3.5": 0.6218
+    },
+    "Stuttgart-Dortmund": {
+        "Predicted Outcome": "Stuttgart",
+        "Home Probability": 0.4027,
+        "Away Probability": 0.3584,
+        "Draw Probability": 0.2127,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.081,
+        "Over 2.5": 0.7036,
+        "Under 2.5": 0.2964,
+        "Over 3.5": 0.4987,
+        "Under 3.5": 0.5013
+    },
+    "Union Berlin-St Pauli": {
+        "Predicted Outcome": "Union Berlin",
+        "Home Probability": 0.4357,
+        "Away Probability": 0.2499,
+        "Draw Probability": 0.3132,
+        "Most likely score": "1-0",
+        "Most likely score probability": 0.1701,
+        "Over 2.5": 0.2898,
+        "Under 2.5": 0.7102,
+        "Over 3.5": 0.1208,
+        "Under 3.5": 0.8792
+    },
+    "Werder Bremen-RB Leipzig": {
+        "Predicted Outcome": "RB Leipzig",
+        "Home Probability": 0.189,
+        "Away Probability": 0.5697,
+        "Draw Probability": 0.2311,
+        "Most likely score": "0-1",
+        "Most likely score probability": 0.121,
+        "Over 2.5": 0.4935,
+        "Under 2.5": 0.5065,
+        "Over 3.5": 0.2733,
+        "Under 3.5": 0.7267
+    }
+}

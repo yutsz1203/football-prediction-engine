@@ -9,6 +9,7 @@ import soccerdata as sd
 import statsmodels
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
+from rich import print
 from scipy.stats import poisson
 from sklearn.calibration import calibration_curve
 
@@ -698,6 +699,14 @@ def plot_calibration():
     plt.show()
 
 
+def calc_brier():
+    df = pd.read_csv("prediction/output/log.csv")
+    df["squared_error"] = (df["predicted_prob"] - df["outcome"]) ** 2
+    results = df.groupby("market_type")["squared_error"].mean()
+    results.to_json("prediction/output/brier.json", indent=4)
+    print(results)
+
+
 def predict():
     max_goals = 6
     gameweeks = get_gameweek()
@@ -750,6 +759,10 @@ def predict():
 
         long, short = {}, {}
         for team in teams[league_name]:
+            curr_fixtures = fixtures_df.at[team, gw]
+            if pd.isna(curr_fixtures):
+                print("Blank")
+                continue
             curr_fixtures = ast.literal_eval(fixtures_df.at[team, gw])
             for curr_fixture in curr_fixtures:
                 opponent, side = curr_fixture.split("-")
