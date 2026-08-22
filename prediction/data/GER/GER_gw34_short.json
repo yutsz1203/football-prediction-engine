@@ -1,0 +1,47 @@
+{
+    "Bayern Munich-FC Koln": {
+        "Outcome": "Bayern Munich (0.5769)",
+        "2.5": "Over (0.5912)",
+        "3.5": "Under (0.5064)"
+    },
+    "Ein Frankfurt-Stuttgart": {
+        "Outcome": "Stuttgart (0.5043)",
+        "2.5": "Over (0.7125)",
+        "3.5": "Over (0.5129)"
+    },
+    "Freiburg-RB Leipzig": {
+        "Outcome": "RB Leipzig (0.3856)",
+        "2.5": "Over (0.6272)",
+        "3.5": "Under (0.5937)"
+    },
+    "Heidenheim-Mainz": {
+        "Outcome": "Heidenheim (0.3956)",
+        "2.5": "Over (0.5708)",
+        "3.5": "Under (0.6533)"
+    },
+    "Leverkusen-Hamburg": {
+        "Outcome": "Leverkusen (0.6499)",
+        "2.5": "Over (0.5806)",
+        "3.5": "Under (0.6427)"
+    },
+    "M'gladbach-Hoffenheim": {
+        "Outcome": "M'gladbach (0.4181)",
+        "2.5": "Over (0.5345)",
+        "3.5": "Under (0.6886)"
+    },
+    "St Pauli-Wolfsburg": {
+        "Outcome": "Wolfsburg (0.4517)",
+        "2.5": "Under (0.6087)",
+        "3.5": "Under (0.8096)"
+    },
+    "Union Berlin-Augsburg": {
+        "Outcome": "Union Berlin (0.4293)",
+        "2.5": "Over (0.5991)",
+        "3.5": "Under (0.6241)"
+    },
+    "Werder Bremen-Dortmund": {
+        "Outcome": "Dortmund (0.6328)",
+        "2.5": "Under (0.5458)",
+        "3.5": "Under (0.7611)"
+    }
+}

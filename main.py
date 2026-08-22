@@ -19,18 +19,20 @@ from utils import get_gameweek, load_results
 if __name__ == "__main__":
     con = console.Console()
 
-    # print("Loading cached results...")
-    # load_results()
+    print("Loading cached results...")
+    load_results()
+    # init_calc_accuracy()
+    # init_log_results()
 
     # con.log("Fetching team stats...")
     # team_stats()
 
     con.log("Calculating accuracy of predictions...")
-    # # init_calc_accuracy()
+
     calc_accuracy()
 
     con.log("Logging prediction results...")
-    # # init_log_results()
+
     log_results()
 
     con.log("Calculating Brier Score of the model.")

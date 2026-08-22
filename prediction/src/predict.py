@@ -194,7 +194,16 @@ def calc_accuracy():
             if not prediction:
                 print(f"No predictions found for {league_name} on gw{row['week']}.")
                 continue
-            match_prediction = prediction[index[2].split(" ", maxsplit=1)[1]]
+            matchup = index[2].split(" ", maxsplit=1)[1]
+            match_prediction = prediction.get(matchup, None)
+            if not match_prediction:
+                curr_gw = int(get_gameweek()[league]) - 1
+                print(
+                    f"Reading gameweek {curr_gw} prediction records for the match {matchup}..."
+                )
+                match_prediction = read_predictions(league_code, league_name, curr_gw)[
+                    matchup
+                ]
             home_score = row["home_score"]
             away_score = row["away_score"]
             total_goals = home_score + away_score
@@ -586,7 +595,16 @@ def log_results():
             if not prediction:
                 print(f"No predictions found for {league_name} on gw{row['week']}.")
                 break
-            match_prediction = prediction[index[2].split(" ", maxsplit=1)[1]]
+            matchup = index[2].split(" ", maxsplit=1)[1]
+            match_prediction = prediction.get(matchup, None)
+            if not match_prediction:
+                curr_gw = int(get_gameweek()[league]) - 1
+                print(
+                    f"Reading gameweek {curr_gw} prediction records for the match {matchup}..."
+                )
+                match_prediction = read_predictions(league_code, league_name, curr_gw)[
+                    matchup
+                ]
 
             home_score = row["home_score"]
             away_score = row["away_score"]
@@ -731,7 +749,7 @@ def predict():
             for team in teams[league_name]:
                 expected_gf, expected_ga = 0.0, 0.0
                 opponents = []
-                for pl_gw in range(int(gw), int(gw) + 5):
+                for pl_gw in range(int(gw), min(int(gw) + 5, 39)):
                     val = fixtures_df.at[team, str(pl_gw)]
                     if pd.isna(val):
                         print(f"Blank GW for {team} on gw {pl_gw}")

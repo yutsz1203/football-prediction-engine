@@ -1,0 +1,32 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           total_points   R-squared:                       0.048
+Model:                            OLS   Adj. R-squared:                  0.046
+Method:                 Least Squares   F-statistic:                     21.59
+Date:                Sat, 25 Jul 2026   Prob (F-statistic):           4.86e-19
+Time:                        14:56:46   Log-Likelihood:                -8514.3
+No. Observations:                3416   AIC:                         1.704e+04
+Df Residuals:                    3409   BIC:                         1.709e+04
+Df Model:                           6                                         
+Covariance Type:              cluster                                         
+====================================================================================================
+                                       coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------
+const                                0.4748      0.383      1.238      0.216      -0.277       1.226
+roll_expected_goals_p90              1.9337      0.485      3.984      0.000       0.982       2.885
+roll_expected_goals_conceded_p90    -0.4008      0.126     -3.189      0.001      -0.647      -0.154
+roll_minutes                         0.0318      0.004      8.089      0.000       0.024       0.040
+roll_creativity_p90                  0.0160      0.009      1.686      0.092      -0.003       0.035
+roll_defensive_contribution_p90      0.0444      0.020      2.255      0.024       0.006       0.083
+roll_expected_assists_p90            0.6857      0.880      0.780      0.436      -1.038       2.410
+==============================================================================
+Omnibus:                     1201.947   Durbin-Watson:                   1.927
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3885.469
+Skew:                           1.803   Prob(JB):                         0.00
+Kurtosis:                       6.780   Cond. No.                     1.25e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors are robust to cluster correlation (cluster)
+[2] The condition number is large, 1.25e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.

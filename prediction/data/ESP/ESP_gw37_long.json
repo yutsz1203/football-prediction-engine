@@ -1,0 +1,122 @@
+{
+    "Ath Bilbao-Celta": {
+        "Predicted Outcome": "Celta",
+        "Home Probability": 0.3556,
+        "Away Probability": 0.391,
+        "Draw Probability": 0.2452,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1138,
+        "Over 2.5": 0.557,
+        "Under 2.5": 0.443,
+        "Over 3.5": 0.3331,
+        "Under 3.5": 0.6669
+    },
+    "Ath Madrid-Girona": {
+        "Predicted Outcome": "Ath Madrid",
+        "Home Probability": 0.5674,
+        "Away Probability": 0.1868,
+        "Draw Probability": 0.2372,
+        "Most likely score": "1-0",
+        "Most likely score probability": 0.13,
+        "Over 2.5": 0.4681,
+        "Under 2.5": 0.5319,
+        "Over 3.5": 0.2512,
+        "Under 3.5": 0.7488
+    },
+    "Barcelona-Betis": {
+        "Predicted Outcome": "Barcelona",
+        "Home Probability": 0.7122,
+        "Away Probability": 0.0919,
+        "Draw Probability": 0.1609,
+        "Most likely score": "2-0",
+        "Most likely score probability": 0.129,
+        "Over 2.5": 0.5627,
+        "Under 2.5": 0.4373,
+        "Over 3.5": 0.339,
+        "Under 3.5": 0.661
+    },
+    "Elche-Getafe": {
+        "Predicted Outcome": "Elche",
+        "Home Probability": 0.3723,
+        "Away Probability": 0.3092,
+        "Draw Probability": 0.3176,
+        "Most likely score": "1-0",
+        "Most likely score probability": 0.151,
+        "Over 2.5": 0.295,
+        "Under 2.5": 0.705,
+        "Over 3.5": 0.1242,
+        "Under 3.5": 0.8758
+    },
+    "Levante-Mallorca": {
+        "Predicted Outcome": "Levante",
+        "Home Probability": 0.4625,
+        "Away Probability": 0.29,
+        "Draw Probability": 0.2369,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1094,
+        "Over 2.5": 0.5694,
+        "Under 2.5": 0.4306,
+        "Over 3.5": 0.3454,
+        "Under 3.5": 0.6546
+    },
+    "Osasuna-Espanol": {
+        "Predicted Outcome": "Osasuna",
+        "Home Probability": 0.5486,
+        "Away Probability": 0.1984,
+        "Draw Probability": 0.246,
+        "Most likely score": "1-0",
+        "Most likely score probability": 0.1336,
+        "Over 2.5": 0.4508,
+        "Under 2.5": 0.5492,
+        "Over 3.5": 0.2368,
+        "Under 3.5": 0.7632
+    },
+    "Oviedo-Alaves": {
+        "Predicted Outcome": "Alaves",
+        "Home Probability": 0.3272,
+        "Away Probability": 0.3972,
+        "Draw Probability": 0.2722,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.129,
+        "Over 2.5": 0.4405,
+        "Under 2.5": 0.5595,
+        "Over 3.5": 0.2288,
+        "Under 3.5": 0.7712
+    },
+    "Sevilla-Real Madrid": {
+        "Predicted Outcome": "Real Madrid",
+        "Home Probability": 0.2156,
+        "Away Probability": 0.5392,
+        "Draw Probability": 0.2355,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1119,
+        "Over 2.5": 0.5099,
+        "Under 2.5": 0.4901,
+        "Over 3.5": 0.2883,
+        "Under 3.5": 0.7117
+    },
+    "Sociedad-Valencia": {
+        "Predicted Outcome": "Sociedad",
+        "Home Probability": 0.5308,
+        "Away Probability": 0.228,
+        "Draw Probability": 0.2291,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1076,
+        "Over 2.5": 0.5496,
+        "Under 2.5": 0.4504,
+        "Over 3.5": 0.3257,
+        "Under 3.5": 0.6743
+    },
+    "Vallecano-Villarreal": {
+        "Predicted Outcome": "Villarreal",
+        "Home Probability": 0.364,
+        "Away Probability": 0.3702,
+        "Draw Probability": 0.261,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.124,
+        "Over 2.5": 0.4892,
+        "Under 2.5": 0.5108,
+        "Over 3.5": 0.2701,
+        "Under 3.5": 0.7299
+    }
+}

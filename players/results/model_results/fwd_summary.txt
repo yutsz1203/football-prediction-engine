@@ -1,0 +1,29 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           total_points   R-squared:                       0.038
+Model:                            OLS   Adj. R-squared:                  0.034
+Method:                 Least Squares   F-statistic:                     3.888
+Date:                Sat, 25 Jul 2026   Prob (F-statistic):             0.0149
+Time:                        14:56:47   Log-Likelihood:                -2076.1
+No. Observations:                 791   AIC:                             4160.
+Df Residuals:                     787   BIC:                             4179.
+Df Model:                           3                                         
+Covariance Type:              cluster                                         
+=============================================================================================
+                                coef    std err          z      P>|z|      [0.025      0.975]
+---------------------------------------------------------------------------------------------
+const                         1.2337      1.004      1.229      0.219      -0.734       3.201
+roll_expected_goals_p90       2.4485      1.016      2.410      0.016       0.457       4.440
+roll_minutes                  0.0155      0.012      1.284      0.199      -0.008       0.039
+roll_expected_assists_p90     4.6247      2.001      2.311      0.021       0.703       8.546
+==============================================================================
+Omnibus:                      230.941   Durbin-Watson:                   1.957
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              507.309
+Skew:                           1.614   Prob(JB):                    6.91e-111
+Kurtosis:                       5.230   Cond. No.                     1.46e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors are robust to cluster correlation (cluster)
+[2] The condition number is large, 1.46e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.

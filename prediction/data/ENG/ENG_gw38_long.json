@@ -1,0 +1,122 @@
+{
+    "Brighton-Man United": {
+        "Predicted Outcome": "Brighton",
+        "Home Probability": 0.4185,
+        "Away Probability": 0.3165,
+        "Draw Probability": 0.26,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1236,
+        "Over 2.5": 0.4849,
+        "Under 2.5": 0.5151,
+        "Over 3.5": 0.2663,
+        "Under 3.5": 0.7337
+    },
+    "Burnley-Wolves": {
+        "Predicted Outcome": "Burnley",
+        "Home Probability": 0.4845,
+        "Away Probability": 0.2374,
+        "Draw Probability": 0.2747,
+        "Most likely score": "1-0",
+        "Most likely score probability": 0.1443,
+        "Over 2.5": 0.3903,
+        "Under 2.5": 0.6097,
+        "Over 3.5": 0.1895,
+        "Under 3.5": 0.8105
+    },
+    "Crystal Palace-Arsenal": {
+        "Predicted Outcome": "Arsenal",
+        "Home Probability": 0.133,
+        "Away Probability": 0.619,
+        "Draw Probability": 0.2414,
+        "Most likely score": "0-1",
+        "Most likely score probability": 0.176,
+        "Over 2.5": 0.3775,
+        "Under 2.5": 0.6225,
+        "Over 3.5": 0.1791,
+        "Under 3.5": 0.8209
+    },
+    "Fulham-Newcastle": {
+        "Predicted Outcome": "Newcastle",
+        "Home Probability": 0.3415,
+        "Away Probability": 0.3806,
+        "Draw Probability": 0.2747,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1299,
+        "Over 2.5": 0.4334,
+        "Under 2.5": 0.5666,
+        "Over 3.5": 0.2232,
+        "Under 3.5": 0.7768
+    },
+    "Liverpool-Brentford": {
+        "Predicted Outcome": "Liverpool",
+        "Home Probability": 0.4938,
+        "Away Probability": 0.2686,
+        "Draw Probability": 0.2199,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.0964,
+        "Over 2.5": 0.6283,
+        "Under 2.5": 0.3717,
+        "Over 3.5": 0.408,
+        "Under 3.5": 0.592
+    },
+    "Man City-Aston Villa": {
+        "Predicted Outcome": "Man City",
+        "Home Probability": 0.7027,
+        "Away Probability": 0.0961,
+        "Draw Probability": 0.1471,
+        "Most likely score": "2-0",
+        "Most likely score probability": 0.1047,
+        "Over 2.5": 0.6292,
+        "Under 2.5": 0.3708,
+        "Over 3.5": 0.4142,
+        "Under 3.5": 0.5858
+    },
+    "Nott'm Forest-Bournemouth": {
+        "Predicted Outcome": "Nott'm Forest",
+        "Home Probability": 0.4398,
+        "Away Probability": 0.3014,
+        "Draw Probability": 0.2524,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1196,
+        "Over 2.5": 0.5101,
+        "Under 2.5": 0.4899,
+        "Over 3.5": 0.2887,
+        "Under 3.5": 0.7113
+    },
+    "Sunderland-Chelsea": {
+        "Predicted Outcome": "Sunderland",
+        "Home Probability": 0.4182,
+        "Away Probability": 0.3138,
+        "Draw Probability": 0.2634,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1253,
+        "Over 2.5": 0.4705,
+        "Under 2.5": 0.5295,
+        "Over 3.5": 0.2538,
+        "Under 3.5": 0.7462
+    },
+    "Tottenham-Everton": {
+        "Predicted Outcome": "Everton",
+        "Home Probability": 0.3684,
+        "Away Probability": 0.3811,
+        "Draw Probability": 0.2411,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1104,
+        "Over 2.5": 0.5766,
+        "Under 2.5": 0.4234,
+        "Over 3.5": 0.3526,
+        "Under 3.5": 0.6474
+    },
+    "West Ham-Leeds": {
+        "Predicted Outcome": "Leeds",
+        "Home Probability": 0.2829,
+        "Away Probability": 0.4449,
+        "Draw Probability": 0.2682,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.1269,
+        "Over 2.5": 0.4397,
+        "Under 2.5": 0.5603,
+        "Over 3.5": 0.2281,
+        "Under 3.5": 0.7719
+    }
+}

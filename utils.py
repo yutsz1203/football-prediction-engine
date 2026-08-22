@@ -56,13 +56,14 @@ def get_team_id_mapping():
     team_map = {}
 
     for team in teams:
+        team_id = int(team["id"])
         # Adjust team name for MatchHistory api
         if team["name"] == "Man Utd":
-            team_map[team["id"]] = "Man United"
+            team_map[team_id] = "Man United"
         elif team["name"] == "Spurs":
-            team_map[team["id"]] = "Tottenham"
+            team_map[team_id] = "Tottenham"
         else:
-            team_map[team["id"]] = team["name"]
+            team_map[team_id] = team["name"]
 
     with open("data/team_mapping.json", "w", encoding="utf-8") as f:
         json.dump(team_map, f, indent=4)
@@ -106,21 +107,28 @@ def get_gameweek(type=None) -> dict:
 
     for league in leagues:
         league_schedule = schedule.loc[league]
-        first_index = league_schedule.loc[
-            league_schedule.index.get_level_values("game") >= today
-        ]["week"].index.to_list()[0]
-        first_index_loc = league_schedule.index.get_loc(first_index)
+        league_schedule = league_schedule[~league_schedule.index.duplicated()]
+        try:
+            first_index = league_schedule.loc[
+                league_schedule.index.get_level_values("game") >= today
+            ]["week"].index.to_list()[0]
+            first_index_loc = league_schedule.index.get_loc(first_index)
+        except IndexError:
+            first_index_loc = len(league_schedule) - 1
+
         if type == "prev":
             gw = str(league_schedule.iloc[first_index_loc - 1]["week"])
         else:
-            gw = str(
-                max(
-                    league_schedule.iloc[first_index_loc]["week"],
-                    league_schedule.iloc[first_index_loc + 1]["week"],
+            if first_index_loc == len(league_schedule) - 1:
+                gw = str(league_schedule.iloc[first_index_loc]["week"])
+            else:
+                gw = str(
+                    max(
+                        league_schedule.iloc[first_index_loc]["week"],
+                        league_schedule.iloc[first_index_loc + 1]["week"],
+                    )
                 )
-            )
         gameweeks[league] = gw
-
     return gameweeks
 
 

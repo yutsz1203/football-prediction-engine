@@ -64,6 +64,11 @@ def get_fixtures():
     get_pl_fixtures()
 
     sofascore = sd.Sofascore(leagues=leagues, seasons=season)
+
+    # first run of each season
+    # schedule = sofascore.read_schedule()
+
+    # uncomment the following for forcing cache
     schedule = sofascore.read_schedule(force_cache=True)
 
     for league in leagues:

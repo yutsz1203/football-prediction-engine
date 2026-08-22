@@ -1,0 +1,47 @@
+{
+    "Angers-Le Havre": {
+        "Outcome": "Draw (0.3733)",
+        "2.5": "Under (0.8187)",
+        "3.5": "Under (0.9394)"
+    },
+    "Lens-Toulouse": {
+        "Outcome": "Lens (0.6799)",
+        "2.5": "Over (0.6274)",
+        "3.5": "Under (0.5894)"
+    },
+    "Lille-Nice": {
+        "Outcome": "Lille (0.7472)",
+        "2.5": "Over (0.6057)",
+        "3.5": "Under (0.6118)"
+    },
+    "Lorient-Marseille": {
+        "Outcome": "Marseille (0.3827)",
+        "2.5": "Over (0.6011)",
+        "3.5": "Under (0.6219)"
+    },
+    "Metz-Paris FC": {
+        "Outcome": "Paris FC (0.539)",
+        "2.5": "Under (0.5344)",
+        "3.5": "Under (0.7508)"
+    },
+    "Monaco-Auxerre": {
+        "Outcome": "Monaco (0.5694)",
+        "2.5": "Under (0.6252)",
+        "3.5": "Under (0.8225)"
+    },
+    "Nantes-Brest": {
+        "Outcome": "Brest (0.4471)",
+        "2.5": "Under (0.5663)",
+        "3.5": "Under (0.7767)"
+    },
+    "Paris SG-Lyon": {
+        "Outcome": "Paris SG (0.6234)",
+        "2.5": "Under (0.5061)",
+        "3.5": "Under (0.7267)"
+    },
+    "Strasbourg-Rennes": {
+        "Outcome": "Strasbourg (0.4853)",
+        "2.5": "Over (0.6209)",
+        "3.5": "Under (0.6003)"
+    }
+}

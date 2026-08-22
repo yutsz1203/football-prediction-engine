@@ -1,8 +1,8 @@
 import json
 import time
 from pathlib import Path
-import soccerdata as sd
 
+import soccerdata as sd
 from rich.progress import Progress
 
 # /Users/yutsz/Desktop/FPL-Transfer-Planner/new_ver
@@ -10,6 +10,8 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 PLAYERS_RESULTS_DIR = PROJECT_DIR / "players" / "results"
 # print(PLAYERS_RESULTS_DIR)
+
+MODEL_RESULTS_DIR = PLAYERS_RESULTS_DIR / "model_results"
 
 PLAYERS_PROJECTION_DIR = PROJECT_DIR / "players" / "projection"
 # print(PLAYERS_PROJECTION_DIR)
@@ -51,9 +53,11 @@ player_season_stats = "player-season-stats"
 player_match_stats = "player-match-stats"
 all_players_match_stats = "all-players-match-stats"
 
-season_id = "2025-2026"
 league_id = 9
-season = 2025  # update every year
+
+# update yearly
+season_id = "2026-2027"
+season = 2026
 
 
 # api = requests.post(base_url + generate_api_key)
@@ -156,30 +160,54 @@ team_id_map_2324 = {
     "8cec06e1": "Wolves",
 }
 
+team_id_map_2526 = {
+    "18bb7c10": "Arsenal",
+    "8602292d": "Aston Villa",
+    "4ba7cbea": "Bournemouth",
+    "cd051869": "Brentford",
+    "d07537b9": "Brighton",
+    "943e8050": "Burnley",
+    "cff3d9bb": "Chelsea",
+    "47c64c55": "Crystal Palace",
+    "d3fd31cc": "Everton",
+    "fd962109": "Fulham",
+    "5bfb9659": "Leeds United",
+    "822bd0ba": "Liverpool",
+    "b8fd03ef": "Manchester City",
+    "19538871": "Manchester Utd",
+    "b2b47a98": "Newcastle Utd",
+    "e4a775cb": "Nott'ham Forest",
+    "8ef52968": "Sunderland",
+    "361ca564": "Tottenham",
+    "7c21e445": "West Ham",
+    "8cec06e1": "Wolves",
+}
+
 # official api variables
 official_base_url = "https://fantasy.premierleague.com/api"
+official_element_summary = f"{official_base_url}/element-summary"
 fpl_id = "157928"
 official_team_id_map = {
     1: "Arsenal",
     2: "Aston Villa",
-    3: "Burnley",
-    4: "Bournemouth",
-    5: "Brentford",
-    6: "Brighton",
-    7: "Chelsea",
+    3: "Bournemouth",
+    4: "Brentford",
+    5: "Brighton",
+    6: "Chelsea",
+    7: "Coventry City",
     8: "Crystal Palace",
     9: "Everton",
     10: "Fulham",
-    11: "Leeds",
-    12: "Liverpool",
-    13: "Man City",
-    14: "Man Utd",
-    15: "Newcastle",
-    16: "Nott'm Forest",
-    17: "Sunderland",
-    18: "Spurs",
-    19: "West Ham",
-    20: "Wolves",
+    11: "Hull City",
+    12: "Ipswich Town",
+    13: "Leeds",
+    14: "Liverpool",
+    15: "Man City",
+    16: "Man United",
+    17: "Newcastle",
+    18: "Nott'm Forest",
+    19: "Tottenham",
+    20: "Sunderland",
 }
 element_type_map = {1: "GK", 2: "DEF", 3: "MID", 4: "FWD"}
 

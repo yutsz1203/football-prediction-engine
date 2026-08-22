@@ -1,0 +1,37 @@
+{
+    "Arsenal-Newcastle": {
+        "Outcome": "Arsenal (0.6893)",
+        "2.5": "Over (0.6292)",
+        "3.5": "Under (0.5867)"
+    },
+    "Fulham-Aston Villa": {
+        "Outcome": "Fulham (0.388)",
+        "2.5": "Over (0.5136)",
+        "3.5": "Under (0.7080)"
+    },
+    "Liverpool-Crystal Palace": {
+        "Outcome": "Liverpool (0.5414)",
+        "2.5": "Under (0.5892)",
+        "3.5": "Under (0.7953)"
+    },
+    "Man United-Brentford": {
+        "Outcome": "Man United (0.5101)",
+        "2.5": "Over (0.5350)",
+        "3.5": "Under (0.6883)"
+    },
+    "Sunderland-Nott'm Forest": {
+        "Outcome": "Nott'm Forest (0.3615)",
+        "2.5": "Under (0.6215)",
+        "3.5": "Under (0.8190)"
+    },
+    "West Ham-Everton": {
+        "Outcome": "Everton (0.3672)",
+        "2.5": "Under (0.5454)",
+        "3.5": "Under (0.7595)"
+    },
+    "Wolves-Tottenham": {
+        "Outcome": "Tottenham (0.3987)",
+        "2.5": "Under (0.5331)",
+        "3.5": "Under (0.7492)"
+    }
+}

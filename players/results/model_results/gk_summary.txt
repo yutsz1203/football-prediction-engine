@@ -1,0 +1,26 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           total_points   R-squared:                       0.016
+Model:                            OLS   Adj. R-squared:                  0.013
+Method:                 Least Squares   F-statistic:                     11.27
+Date:                Sat, 25 Jul 2026   Prob (F-statistic):           0.000239
+Time:                        14:56:45   Log-Likelihood:                -1482.3
+No. Observations:                 615   AIC:                             2971.
+Df Residuals:                     612   BIC:                             2984.
+Df Model:                           2                                         
+Covariance Type:              cluster                                         
+====================================================================================================
+                                       coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------
+const                                4.5857      0.251     18.302      0.000       4.095       5.077
+roll_expected_goals_conceded_p90    -0.9160      0.194     -4.730      0.000      -1.296      -0.536
+roll_goal_conceded_overperf_p90      0.1716      0.246      0.696      0.486      -0.311       0.654
+==============================================================================
+Omnibus:                      133.051   Durbin-Watson:                   2.165
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              231.051
+Skew:                           1.309   Prob(JB):                     6.73e-51
+Kurtosis:                       4.469   Cond. No.                         8.15
+==============================================================================
+
+Notes:
+[1] Standard Errors are robust to cluster correlation (cluster)

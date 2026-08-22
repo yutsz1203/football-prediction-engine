@@ -1,0 +1,52 @@
+{
+    "Ath Bilbao-Valencia": {
+        "Outcome": "Ath Bilbao (0.5169)",
+        "2.5": "Over (0.5104)",
+        "3.5": "Under (0.7113)"
+    },
+    "Ath Madrid-Celta": {
+        "Outcome": "Ath Madrid (0.5402)",
+        "2.5": "Over (0.6115)",
+        "3.5": "Under (0.6103)"
+    },
+    "Barcelona-Real Madrid": {
+        "Outcome": "Barcelona (0.6076)",
+        "2.5": "Over (0.5479)",
+        "3.5": "Under (0.6760)"
+    },
+    "Elche-Alaves": {
+        "Outcome": "Elche (0.5099)",
+        "2.5": "Over (0.7010)",
+        "3.5": "Under (0.5028)"
+    },
+    "Levante-Osasuna": {
+        "Outcome": "Osasuna (0.3665)",
+        "2.5": "Under (0.6098)",
+        "3.5": "Under (0.8104)"
+    },
+    "Mallorca-Villarreal": {
+        "Outcome": "Villarreal (0.4113)",
+        "2.5": "Over (0.5480)",
+        "3.5": "Under (0.6757)"
+    },
+    "Oviedo-Getafe": {
+        "Outcome": "Draw (0.3731)",
+        "2.5": "Under (0.8184)",
+        "3.5": "Under (0.9392)"
+    },
+    "Sevilla-Espanol": {
+        "Outcome": "Sevilla (0.4752)",
+        "2.5": "Under (0.6076)",
+        "3.5": "Under (0.8089)"
+    },
+    "Sociedad-Betis": {
+        "Outcome": "Sociedad (0.4121)",
+        "2.5": "Over (0.6315)",
+        "3.5": "Under (0.5888)"
+    },
+    "Vallecano-Girona": {
+        "Outcome": "Vallecano (0.4576)",
+        "2.5": "Under (0.6484)",
+        "3.5": "Under (0.8385)"
+    }
+}
