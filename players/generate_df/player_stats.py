@@ -1,18 +1,23 @@
 # url: https://fantasy.premierleague.com/api/element-summary/{player-id}/
 # or try this: https://fantasy.premierleague.com/api/event/1/live/
+import asyncio
 import os
 import sys
 
+import aiohttp
 import pandas as pd
-import requests
+from rich.progress import Progress
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 from const import (  # noqa : E402
     PLAYERS_DATA_DIR,
     PLAYERS_RESULTS_DIR,
-    official_base_url,
-    official_to_fbref_team_map,
+    official_element_summary,
 )
+
+MAX_CONCURRENT_REQUESTS = 10
+MAX_RETRIES = 5
+REQUEST_TIMEOUT_SECONDS = 30
 
 
 def stats_calculation(matches):
@@ -185,7 +190,7 @@ def build_dict(
         "Player ID": element_id,
         "Name": player,
         "Pos": pos,
-        "Team": official_to_fbref_team_map[team],
+        "Team": team,
         "Cost": cost,
         "Total Points": points,
         "Bonus": bonus,
@@ -220,174 +225,186 @@ def build_dict(
     }
 
 
-if __name__ == "__main__":
-    gw = int(input("Enter current gameweek number: "))
-    n = int(input("Enter number of last n games to include in calculation: "))
+async def fetch_player_history(element_id, session, semaphore):
+    """Fetch one player's match history.
 
-    player_basic_df = pd.read_csv(PLAYERS_DATA_DIR / "players.csv")
+    Returns the list of matches, or None if the player has no history (i.e. has
+    not played in the current season). Raises RuntimeError once the retries are
+    exhausted so the caller can report which players were lost.
+    """
+    url = f"{official_element_summary}/{element_id}/"
+    last_error = None
+    for attempt in range(MAX_RETRIES):
+        try:
+            async with semaphore:
+                async with session.get(url) as response:
+                    if response.status == 429:
+                        last_error = "rate limited (HTTP 429)"
+                        await asyncio.sleep(2**attempt)
+                        continue
+                    response.raise_for_status()
+                    content = await response.json()
+            return content.get("history")
+        except Exception as e:
+            last_error = repr(e)
+            await asyncio.sleep(2**attempt)
+    raise RuntimeError(
+        f"gave up on player {element_id} after {MAX_RETRIES} attempts: {last_error}"
+    )
+
+
+async def fetch_all_histories(element_ids):
+    """Fetch every player's history concurrently.
+
+    Results come back in the same order as element_ids; each entry is either the
+    match list, None (player has not played), or the Exception that ended it.
+    """
+    semaphore = asyncio.Semaphore(MAX_CONCURRENT_REQUESTS)
+    timeout = aiohttp.ClientTimeout(total=REQUEST_TIMEOUT_SECONDS)
+    async with aiohttp.ClientSession(timeout=timeout) as session:
+        with Progress() as progress:
+            task = progress.add_task("Fetching player data...", total=len(element_ids))
+
+            async def fetch_and_advance(element_id):
+                try:
+                    return await fetch_player_history(element_id, session, semaphore)
+                finally:
+                    progress.update(task, advance=1)
+
+            return await asyncio.gather(
+                *(fetch_and_advance(element_id) for element_id in element_ids),
+                return_exceptions=True,
+            )
+
+
+def build_row(player_basic_df, element_id, matches):
+    """Turn one player's matches into a single output row."""
+    (
+        points,
+        games,
+        goals,
+        assists,
+        xG,
+        xA,
+        xGI,
+        gc,
+        xGc,
+        clean_sheets,
+        defensive_contribution,
+        saves,
+        bonus,
+        h_games,
+        h_goals,
+        h_assists,
+        hxG,
+        hxA,
+        hxGI,
+        h_gc,
+        hxGc,
+        a_games,
+        a_goals,
+        a_assists,
+        axG,
+        axA,
+        axGI,
+        a_gc,
+        axGc,
+    ) = stats_calculation(matches)
+
+    return build_dict(
+        element_id,
+        player_basic_df.loc[element_id, "Name"],
+        player_basic_df.loc[element_id, "Pos"],
+        player_basic_df.loc[element_id, "Team"],
+        player_basic_df.loc[element_id, "Cost"],
+        points,
+        games,
+        goals,
+        assists,
+        xG,
+        xA,
+        xGI,
+        gc,
+        xGc,
+        clean_sheets,
+        defensive_contribution,
+        saves,
+        bonus,
+        h_games,
+        h_goals,
+        h_assists,
+        hxG,
+        hxA,
+        hxGI,
+        h_gc,
+        hxGc,
+        a_games,
+        a_goals,
+        a_assists,
+        axG,
+        axA,
+        axGI,
+        a_gc,
+        axGc,
+    )
+
+
+def save(rows, file_path, description):
+    df = pd.DataFrame(rows)
+    df.sort_values(by=["xGI", "Points/$"], ascending=False, inplace=True)
+    df.to_csv(file_path, index=False)
+    print(f"Player stats of {description} saved to {file_path}")
+    return df
+
+
+def main(n):
+    player_basic_df = pd.read_csv(
+        PLAYERS_DATA_DIR / "players.csv", index_col="Player ID"
+    )
     player_ids = player_basic_df.index.tolist()
+
+    histories = asyncio.run(fetch_all_histories(player_ids))
+
     df = []
     lastngamesdf = []
-    for player_id in player_ids:
-        player = player_basic_df.loc[player_id, "Name"]
-        print(f"Fetching data for {player}...")
-        element_id = player_id + 1
-        response = requests.get(f"{official_base_url}/element-summary/{element_id}/")
-        if "history" not in response.json():
-            print(f"{player} has not played in the current season, skipping...")
+    not_played = []
+    failed = []
+    for element_id, history in zip(player_ids, histories):
+        player = player_basic_df.loc[element_id, "Name"]
+        if isinstance(history, BaseException):
+            failed.append(f"{player} ({element_id}): {history}")
             continue
-        matches = response.json()["history"]
-        (
-            points,
-            games,
-            goals,
-            assists,
-            xG,
-            xA,
-            xGI,
-            gc,
-            xGc,
-            clean_sheets,
-            defensive_contribution,
-            saves,
-            bonus,
-            h_games,
-            h_goals,
-            h_assists,
-            hxG,
-            hxA,
-            hxGI,
-            h_gc,
-            hxGc,
-            a_games,
-            a_goals,
-            a_assists,
-            axG,
-            axA,
-            axGI,
-            a_gc,
-            axGc,
-        ) = stats_calculation(matches)
-        (
-            lastn_points,
-            lastn_games,
-            lastn_goals,
-            lastn_assists,
-            lastn_xG,
-            lastn_xA,
-            lastn_xGI,
-            lastn_gc,
-            lastn_xGc,
-            lastn_clean_sheets,
-            lastn_defensive_contribution,
-            lastn_saves,
-            lastn_bonus,
-            lastn_h_goals,
-            lastn_h_assists,
-            lastn_h_games,
-            lastn_h_xG,
-            lastn_h_xA,
-            lastn_h_xGI,
-            lastn_h_gc,
-            lastn_h_xGc,
-            lastn_a_games,
-            lastn_a_goals,
-            lastn_a_assists,
-            lastn_a_xG,
-            lastn_a_xA,
-            lastn_a_xGI,
-            lastn_a_gc,
-            lastn_a_xGc,
-        ) = stats_calculation(matches[-n:])
+        if history is None:
+            not_played.append(player)
+            continue
+        df.append(build_row(player_basic_df, element_id, history))
+        lastngamesdf.append(build_row(player_basic_df, element_id, history[-n:]))
 
-        df.append(
-            build_dict(
-                element_id,
-                player,
-                player_basic_df.loc[player_id, "Pos"],
-                player_basic_df.loc[player_id, "Team"],
-                player_basic_df.loc[player_id, "Cost"],
-                points,
-                games,
-                goals,
-                assists,
-                xG,
-                xA,
-                xGI,
-                gc,
-                xGc,
-                clean_sheets,
-                defensive_contribution,
-                saves,
-                bonus,
-                h_games,
-                h_goals,
-                h_assists,
-                hxG,
-                hxA,
-                hxGI,
-                h_gc,
-                hxGc,
-                a_games,
-                a_goals,
-                a_assists,
-                axG,
-                axA,
-                axGI,
-                a_gc,
-                axGc,
-            )
+    if not_played:
+        print(
+            f"{len(not_played)} players have not played in the current season, "
+            f"skipped: {', '.join(not_played)}"
         )
-        lastngamesdf.append(
-            build_dict(
-                element_id,
-                player,
-                player_basic_df.loc[player_id, "Pos"],
-                player_basic_df.loc[player_id, "Team"],
-                player_basic_df.loc[player_id, "Cost"],
-                lastn_points,
-                lastn_games,
-                lastn_goals,
-                lastn_assists,
-                lastn_xG,
-                lastn_xA,
-                lastn_xGI,
-                lastn_gc,
-                lastn_xGc,
-                lastn_clean_sheets,
-                lastn_defensive_contribution,
-                lastn_saves,
-                lastn_bonus,
-                lastn_h_games,
-                lastn_h_goals,
-                lastn_h_assists,
-                lastn_h_xG,
-                lastn_h_xA,
-                lastn_h_xGI,
-                lastn_h_gc,
-                lastn_h_xGc,
-                lastn_a_games,
-                lastn_a_goals,
-                lastn_a_assists,
-                lastn_a_xG,
-                lastn_a_xA,
-                lastn_a_xGI,
-                lastn_a_gc,
-                lastn_a_xGc,
-            )
-        )
+    if failed:
+        print(f"\n{len(failed)} players could not be fetched and are MISSING:")
+        for failure in failed:
+            print(f"  - {failure}")
 
-    df = pd.DataFrame(df)
-    df.sort_values(by=["xGI", "Points/$"], ascending=False, inplace=True)
-    file_path = PLAYERS_RESULTS_DIR / "players_currentseason.csv"
-    df.to_csv(file_path, index=False)
-    print(f"Player stats of current season saved to {file_path}")
-
-    lastngamesdf = pd.DataFrame(lastngamesdf)
-    lastngamesdf.sort_values(by=["xGI", "Points/$"], ascending=False, inplace=True)
-    file_path = PLAYERS_RESULTS_DIR / f"players_last{n}games.csv"
-    lastngamesdf.to_csv(file_path, index=False)
-    print(f"Player stats of last {n} games saved to {file_path}")
+    df = save(
+        df,
+        PLAYERS_RESULTS_DIR / "players_currentseason.csv",
+        "current season",
+    )
+    lastngamesdf = save(
+        lastngamesdf,
+        PLAYERS_RESULTS_DIR / f"players_last{n}games.csv",
+        f"last {n} games",
+    )
 
     print(df.head())
     print(lastngamesdf.head())
+
+
+if __name__ == "__main__":
+    n = int(input("Enter number of last n games to include in calculation: "))
+    main(n)

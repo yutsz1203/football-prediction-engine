@@ -225,7 +225,7 @@ official_to_fbref_team_map = {
     "Leeds": "Leeds United",
     "Liverpool": "Liverpool",
     "Man City": "Manchester City",
-    "Man Utd": "Manchester Utd",
+    "Man United": "Manchester Utd",
     "Newcastle": "Newcastle Utd",
     "Nott'm Forest": "Nott'ham Forest",
     "Sunderland": "Sunderland",

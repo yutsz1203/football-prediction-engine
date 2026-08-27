@@ -19,6 +19,9 @@ players = []
 index = []
 
 for player in data:
+    if not player["can_select"]:
+        print(player["web_name"])
+        continue
     index.append(player["id"])
     players.append(
         {

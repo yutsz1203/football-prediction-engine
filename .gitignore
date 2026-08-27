@@ -120,3 +120,6 @@ dmypy.json
 
 # # Data generated
 # *.csv
+
+# understand-anything
+.ua/
