@@ -5,7 +5,6 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import soccerdata as sd
 import statsmodels
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
@@ -13,8 +12,8 @@ from rich import print
 from scipy.stats import poisson
 from sklearn.calibration import calibration_curve
 
-from const import TEAMS_DATA_DIR, TEAMS_PROJECTION_DIR, leagues, season, teams
-from utils import ci, get_gameweek
+from const import TEAMS_DATA_DIR, TEAMS_PROJECTION_DIR, leagues, teams
+from utils import ci, get_gameweek, read_schedule
 
 
 def create_model_data(df):
@@ -138,8 +137,7 @@ def process_predict(proba: list, home: str, away: str) -> tuple[dict, dict]:
 
 
 def calc_accuracy():
-    sofascore = sd.Sofascore(leagues=leagues, seasons=season)
-    results = sofascore.read_schedule(force_cache=True)
+    results = read_schedule()
     results["date"] = results["date"].dt.tz_localize(None).dt.date
 
     df = pd.read_csv("prediction/output/accuracy.csv", index_col=0)
@@ -252,6 +250,10 @@ def calc_accuracy():
 
             curr_total += 1
 
+        if curr_total == 0:
+            print(f"No new {league_name} results with saved predictions.")
+            continue
+
         curr_correct_outcome_probs = [
             round(x * 100, 2) for x in curr_correct_outcome_probs
         ]
@@ -313,8 +315,7 @@ def calc_accuracy():
 
 
 def init_calc_accuracy():
-    sofascore = sd.Sofascore(leagues=leagues, seasons=season)
-    results = sofascore.read_schedule(force_cache=True)
+    results = read_schedule()
     # gameweeks = get_gameweek()
     gameweeks = {
         "ENG-Premier League": "28",
@@ -456,8 +457,7 @@ def read_predictions(league_code, league_name, gw) -> dict[str, dict] | None:
 
 
 def init_log_results():
-    sofascore = sd.Sofascore(leagues=leagues, seasons=season)
-    results = sofascore.read_schedule(force_cache=True)
+    results = read_schedule()
     gameweeks = {
         "ENG-Premier League": "28",
         "ESP-La Liga": "26",
@@ -562,8 +562,7 @@ def init_log_results():
 
 
 def log_results():
-    sofascore = sd.Sofascore(leagues=leagues, seasons=season)
-    results = sofascore.read_schedule(force_cache=True)
+    results = read_schedule()
     results["date"] = results["date"].dt.tz_localize(None).dt.date
 
     prev_log_df = pd.read_csv("prediction/output/log.csv")
@@ -584,17 +583,13 @@ def log_results():
         gw = result_df.iloc[0]["week"]
         prediction = read_predictions(league_code, league_name, gw)
 
-        if not prediction:
-            print(f"No predictions found for {league_name} on gw{gw}.")
-            continue
-
         for index, row in result_df.iterrows():
             if row["week"] != gw:
                 gw = row["week"]
                 prediction = read_predictions(league_code, league_name, gw)
             if not prediction:
                 print(f"No predictions found for {league_name} on gw{row['week']}.")
-                break
+                continue
             matchup = index[2].split(" ", maxsplit=1)[1]
             match_prediction = prediction.get(matchup, None)
             if not match_prediction:
@@ -731,8 +726,7 @@ def predict():
     for league in leagues:
         league_code, league_name = league.split("-")
 
-        ss = sd.Sofascore(leagues=league, seasons=season, proxy="tor")
-        hist = ss.read_schedule(force_cache=True)
+        hist = read_schedule(league)
         gw = gameweeks[league]
         T = hist.loc[hist["week"] == int(gw), "date"].values[0]
         hist.dropna(inplace=True)

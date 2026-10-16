@@ -5,10 +5,10 @@ import sys
 
 import pandas as pd
 import requests
-import soccerdata as sd
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from const import TEAMS_DATA_DIR, leagues, season  # noqa: E402
+from const import TEAMS_DATA_DIR, leagues  # noqa: E402
+from utils import read_fotmob_schedule  # noqa: E402
 
 
 def get_pl_fixtures():
@@ -63,27 +63,20 @@ def get_fixtures():
     print("Getting fixtures of premier league")
     get_pl_fixtures()
 
-    sofascore = sd.Sofascore(leagues=leagues, seasons=season)
-
-    # first run of each season
-    # schedule = sofascore.read_schedule()
-
-    # uncomment the following for forcing cache
-    schedule = sofascore.read_schedule(force_cache=True)
-
     for league in leagues:
         if league == "ENG-Premier League":
             continue
         flat_data = []
         league_code, league_name = league.split("-")
-        schedule_df = schedule.loc[league].copy()
+        print(f"Fetching {league_name} fixtures from FotMob...")
+        schedule_df = read_fotmob_schedule(league)
 
         for _, row in schedule_df.iterrows():
             flat_data.append(
                 {
                     "team": row["home_team"],
                     "opponent": f"{row['away_team']}-H",
-                    "gw": row["week"],
+                    "gw": row["round"],
                 }
             )
             # Away perspective
@@ -91,7 +84,7 @@ def get_fixtures():
                 {
                     "team": row["away_team"],
                     "opponent": f"{row['home_team']}-A",
-                    "gw": row["week"],
+                    "gw": row["round"],
                 }
             )
 

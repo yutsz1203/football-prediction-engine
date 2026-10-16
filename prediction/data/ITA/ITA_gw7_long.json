@@ -1,0 +1,122 @@
+{
+    "Bologna-Inter": {
+        "Predicted Outcome": "Inter",
+        "Home Probability": 0.117,
+        "Away Probability": 0.6752,
+        "Draw Probability": 0.1589,
+        "Most likely score": "0-2",
+        "Most likely score probability": 0.0961,
+        "Over 2.5": 0.6401,
+        "Under 2.5": 0.3599,
+        "Over 3.5": 0.426,
+        "Under 3.5": 0.574
+    },
+    "Fiorentina-Como": {
+        "Predicted Outcome": "Como",
+        "Home Probability": 0.0917,
+        "Away Probability": 0.7069,
+        "Draw Probability": 0.1417,
+        "Most likely score": "0-2",
+        "Most likely score probability": 0.1027,
+        "Over 2.5": 0.6365,
+        "Under 2.5": 0.3635,
+        "Over 3.5": 0.4238,
+        "Under 3.5": 0.5762
+    },
+    "Frosinone-Sassuolo": {
+        "Predicted Outcome": "Sassuolo",
+        "Home Probability": 0.3717,
+        "Away Probability": 0.3822,
+        "Draw Probability": 0.2339,
+        "Most likely score": "1-1",
+        "Most likely score probability": 0.104,
+        "Over 2.5": 0.6098,
+        "Under 2.5": 0.3902,
+        "Over 3.5": 0.3873,
+        "Under 3.5": 0.6127
+    },
+    "Juventus-Lazio": {
+        "Predicted Outcome": "Juventus",
+        "Home Probability": 0.4104,
+        "Away Probability": 0.2924,
+        "Draw Probability": 0.2954,
+        "Most likely score": "1-0",
+        "Most likely score probability": 0.1414,
+        "Over 2.5": 0.3532,
+        "Under 2.5": 0.6468,
+        "Over 3.5": 0.1629,
+        "Under 3.5": 0.8371
+    },
+    "Milan-Atalanta": {
+        "Predicted Outcome": "Milan",
+        "Home Probability": 0.6041,
+        "Away Probability": 0.1522,
+        "Draw Probability": 0.2357,
+        "Most likely score": "1-0",
+        "Most likely score probability": 0.153,
+        "Over 2.5": 0.4243,
+        "Under 2.5": 0.5757,
+        "Over 3.5": 0.2149,
+        "Under 3.5": 0.7851
+    },
+    "Monza-Cagliari": {
+        "Predicted Outcome": "Cagliari",
+        "Home Probability": 0.1476,
+        "Away Probability": 0.5421,
+        "Draw Probability": 0.3087,
+        "Most likely score": "0-1",
+        "Most likely score probability": 0.2231,
+        "Over 2.5": 0.2382,
+        "Under 2.5": 0.7618,
+        "Over 3.5": 0.09,
+        "Under 3.5": 0.91
+    },
+    "Parma-Torino": {
+        "Predicted Outcome": "Torino",
+        "Home Probability": 0.2612,
+        "Away Probability": 0.4109,
+        "Draw Probability": 0.3272,
+        "Most likely score": "0-1",
+        "Most likely score probability": 0.1737,
+        "Over 2.5": 0.2617,
+        "Under 2.5": 0.7383,
+        "Over 3.5": 0.1038,
+        "Under 3.5": 0.8962
+    },
+    "Roma-Genoa": {
+        "Predicted Outcome": "Roma",
+        "Home Probability": 0.8288,
+        "Away Probability": 0.0154,
+        "Draw Probability": 0.0751,
+        "Most likely score": "2-0",
+        "Most likely score probability": 0.1776,
+        "Over 2.5": 0.5417,
+        "Under 2.5": 0.4583,
+        "Over 3.5": 0.3192,
+        "Under 3.5": 0.6808
+    },
+    "Udinese-Lecce": {
+        "Predicted Outcome": "Udinese",
+        "Home Probability": 0.6441,
+        "Away Probability": 0.1028,
+        "Draw Probability": 0.1223,
+        "Most likely score": "3-1",
+        "Most likely score probability": 0.0777,
+        "Over 2.5": 0.7153,
+        "Under 2.5": 0.2847,
+        "Over 3.5": 0.5571,
+        "Under 3.5": 0.4429
+    },
+    "Venezia-Napoli": {
+        "Predicted Outcome": "Napoli",
+        "Home Probability": 0.0423,
+        "Away Probability": 0.7805,
+        "Draw Probability": 0.1057,
+        "Most likely score": "0-2",
+        "Most likely score probability": 0.1394,
+        "Over 2.5": 0.5861,
+        "Under 2.5": 0.4139,
+        "Over 3.5": 0.3672,
+        "Under 3.5": 0.6328
+    }
+}

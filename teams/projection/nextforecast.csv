@@ -1,21 +1,21 @@
 team,opponents,expected_gf,expected_ga
-Man City,Aston Villa,2.66,0.86
-Liverpool,Brentford,1.95,1.38
-Arsenal,Crystal Palace,1.63,0.6
-Everton,Tottenham,1.54,1.51
-Nott'm Forest,Bournemouth,1.53,1.22
-Tottenham,Everton,1.51,1.54
-Brighton,Man United,1.43,1.2
-Sunderland,Chelsea,1.4,1.17
-Leeds,West Ham,1.4,1.05
-Burnley,Wolves,1.38,0.88
-Brentford,Liverpool,1.38,1.95
-Newcastle,Fulham,1.25,1.17
-Bournemouth,Nott'm Forest,1.22,1.53
-Man United,Brighton,1.2,1.43
-Fulham,Newcastle,1.17,1.25
-Chelsea,Sunderland,1.17,1.4
-West Ham,Leeds,1.05,1.4
-Wolves,Burnley,0.88,1.38
-Aston Villa,Man City,0.86,2.66
-Crystal Palace,Arsenal,0.6,1.63
+Brighton,Crystal Palace,6.01,0.61
+Man City,Ipswich Town,4.75,0.88
+Aston Villa,Newcastle,3.27,2.53
+Newcastle,Aston Villa,2.53,3.27
+Chelsea,Everton,2.41,1.59
+Arsenal,Nott'm Forest,2.26,0.43
+Brentford,Liverpool,1.83,0.53
+Everton,Chelsea,1.59,2.41
+Leeds,Man United,1.51,0.58
+Sunderland,Bournemouth,1.23,1.11
+Bournemouth,Sunderland,1.11,1.23
+Hull City,Fulham,1.0,0.55
+Ipswich Town,Man City,0.88,4.75
+Coventry City,Tottenham,0.81,0.44
+Crystal Palace,Brighton,0.61,6.01
+Man United,Leeds,0.58,1.51
+Fulham,Hull City,0.55,1.0
+Liverpool,Brentford,0.53,1.83
+Tottenham,Coventry City,0.44,0.81
+Nott'm Forest,Arsenal,0.43,2.26

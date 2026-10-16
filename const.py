@@ -37,6 +37,67 @@ TEAMS_PROJECTION_DIR = PROJECT_DIR / "teams" / "projection"
 # update every year to delete relegated teams and add promoted teams
 leagues = sd.MatchHistory.available_leagues()
 
+fotmob_league_ids = {
+    "ENG-Premier League": 47,
+    "ESP-La Liga": 87,
+    "FRA-Ligue 1": 53,
+    "GER-Bundesliga": 54,
+    "ITA-Serie A": 55,
+}
+
+# update yearly: maps ESPN / football-data.co.uk / FotMob team names to the names in teams/data/teams.json
+team_name_map = {
+    # ESPN
+    "AFC Bournemouth": "Bournemouth",
+    "Alavés": "Alaves",
+    "Deportivo": "Deportivo de A Coruña",
+    "Málaga": "Málaga CF",
+    "Racing Santander": "Real Racing Club",
+    "AJ Auxerre": "Auxerre",
+    "Le Havre AC": "Le Havre",
+    "Bayer Leverkusen": "Leverkusen",
+    "Borussia Mönchengladbach": "M'gladbach",
+    "FC Cologne": "FC Koln",
+    "Hamburg SV": "Hamburg",
+    "SV Elversberg": "SV 07 Elversberg",
+    "Schalke 04": "FC Schalke 04",
+    "Internazionale": "Inter",
+    # football-data.co.uk
+    "Coventry": "Coventry City",
+    "Hull": "Hull City",
+    "Ipswich": "Ipswich Town",
+    "La Coruna": "Deportivo de A Coruña",
+    "Malaga": "Málaga CF",
+    "Santander": "Real Racing Club",
+    "Elversberg": "SV 07 Elversberg",
+    "Paderborn": "SC Paderborn 07",
+    # FotMob
+    "Brighton & Hove Albion": "Brighton",
+    "Leeds United": "Leeds",
+    "Manchester City": "Man City",
+    "Manchester United": "Man United",
+    "Newcastle United": "Newcastle",
+    "Nottingham Forest": "Nott'm Forest",
+    "Tottenham Hotspur": "Tottenham",
+    "Athletic Club": "Ath Bilbao",
+    "Atlético Madrid": "Ath Madrid",
+    "Celta Vigo": "Celta",
+    "Deportivo A Coruña": "Deportivo de A Coruña",
+    "Deportivo Alavés": "Alaves",
+    "Espanyol": "Espanol",
+    "Rayo Vallecano": "Vallecano",
+    "Real Betis": "Betis",
+    "Real Sociedad": "Sociedad",
+    "1. FC Köln": "FC Koln",
+    "Bayern München": "Bayern Munich",
+    "Borussia Dortmund": "Dortmund",
+    "Eintracht Frankfurt": "Ein Frankfurt",
+    "Hamburger SV": "Hamburg",
+    "Mainz 05": "Mainz",
+    "VfB Stuttgart": "Stuttgart",
+    "Paris Saint-Germain": "Paris SG",
+}
+
 # fbref api
 base_url = "https://fbrapi.com/"
 generate_api_key = "generate_api_key"
@@ -186,7 +247,7 @@ team_id_map_2526 = {
 # official api variables
 official_base_url = "https://fantasy.premierleague.com/api"
 official_element_summary = f"{official_base_url}/element-summary"
-fpl_id = "157928"
+fpl_id = "245705"
 official_team_id_map = {
     1: "Arsenal",
     2: "Aston Villa",

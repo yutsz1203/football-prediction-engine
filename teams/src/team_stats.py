@@ -1,10 +1,9 @@
 import json
 
 import pandas as pd
-import soccerdata as sd
 
-from const import TEAMS_DATA_DIR, TEAMS_RESULTS_DIR, leagues, season
-from utils import get_gameweek
+from const import TEAMS_DATA_DIR, TEAMS_RESULTS_DIR, leagues
+from utils import get_gameweek, read_schedule
 
 """
 gather latest team season + last 5 stats
@@ -20,8 +19,7 @@ def team_stats(n=5):
         current_season_team = []
         lastngames_team = []
 
-        ss = sd.Sofascore(leagues=league, seasons=season)
-        hist = ss.read_schedule()
+        hist = read_schedule(league)
         cols = ["home_team", "away_team", "home_score", "away_score"]
         hist_df = hist[cols].copy()
         hist_df.dropna(inplace=True)

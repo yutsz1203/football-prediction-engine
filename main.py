@@ -14,18 +14,16 @@ from prediction.src.predict import (
     predict,
 )
 from teams.src.team_stats import team_stats
-from utils import get_gameweek, load_results
+from utils import get_gameweek
 
 if __name__ == "__main__":
     con = console.Console()
 
-    print("Loading cached results...")
-    load_results()
     # init_calc_accuracy()
     # init_log_results()
 
-    # con.log("Fetching team stats...")
-    # team_stats()
+    con.log("Fetching team stats...")
+    team_stats()
 
     con.log("Calculating accuracy of predictions...")
 

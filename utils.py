@@ -1,12 +1,22 @@
+import ast
 import json
 from datetime import date
+from functools import cache
 
 import numpy as np
+import pandas as pd
 import requests
 import soccerdata as sd
 from scipy.stats import sem, t
 
-from const import leagues, official_base_url, season
+from const import (
+    TEAMS_DATA_DIR,
+    fotmob_league_ids,
+    leagues,
+    official_base_url,
+    season,
+    team_name_map,
+)
 
 """
 Documentation: https://fbrapi.com/documentation
@@ -42,12 +52,6 @@ league_id = 9
 # print(df.columns)
 
 
-def load_results():
-    sofascore = sd.Sofascore(leagues=["ESP-La Liga", "GER-Bundesliga"], seasons=season)
-    schedule = sofascore.read_schedule(force_cache=True)
-    print(schedule.dropna())
-
-
 def get_team_id_mapping():
     response = requests.get(f"{official_base_url}/bootstrap-static")
 
@@ -71,16 +75,6 @@ def get_team_id_mapping():
     print("Output team mappings to data/team_mapping.json")
 
 
-def test():
-    sofascore = sd.Sofascore(leagues="FRA-Ligue 1", seasons=season)
-    schedule = sofascore.read_schedule(force_cache=True)
-
-    gw = int(input(f"Enter gameweek: "))
-    print(schedule.loc[schedule["week"] == gw])
-
-    print(schedule.dtypes)
-
-
 def get_teams():
     teams = {}
     for league in leagues:
@@ -99,9 +93,132 @@ def get_teams():
     print("Output teams to teams/data/teams.json ")
 
 
+def check_team_names(df: pd.DataFrame, source: str):
+    """Raise if df has home/away team names that are not in teams/data/teams.json."""
+    with open(TEAMS_DATA_DIR / "teams.json", "r", encoding="utf-8") as file:
+        teams = json.load(file)
+    unknown = set()
+    for league, league_df in df.groupby("league"):
+        league_teams = set(league_df["home_team"]) | set(league_df["away_team"])
+        unknown |= league_teams - set(teams[league.split("-")[1]])
+    if unknown:
+        raise ValueError(
+            f"Unknown {source} team names {sorted(unknown)}. Add them to team_name_map in const.py."
+        )
+
+
+def read_fotmob_schedule(league: str) -> pd.DataFrame:
+    """Season fixtures of a league with kick-off time (UTC) and round number from FotMob."""
+    response = requests.get(
+        "https://www.fotmob.com/api/data/leagues",
+        params={"id": fotmob_league_ids[league], "season": f"{season}/{season + 1}"},
+        headers={"User-Agent": "Mozilla/5.0"},
+        timeout=30,
+    )
+    response.raise_for_status()
+    matches = response.json()["fixtures"]["allMatches"]
+
+    schedule_df = pd.DataFrame(
+        {
+            "league": league,
+            "date": pd.to_datetime(
+                [match["status"]["utcTime"] for match in matches],
+                utc=True,
+                format="ISO8601",
+            ),
+            "home_team": [match["home"]["name"] for match in matches],
+            "away_team": [match["away"]["name"] for match in matches],
+            "round": [int(match["round"]) for match in matches],
+        }
+    )
+    schedule_df[["home_team", "away_team"]] = schedule_df[
+        ["home_team", "away_team"]
+    ].replace(team_name_map)
+    check_team_names(schedule_df, "FotMob")
+    return schedule_df
+
+
+def read_weeks() -> dict[tuple[str, str, str], int]:
+    """Map (league, home_team, away_team) to its gameweek using teams/data/{code}_fixtures.csv."""
+    weeks = {}
+    for league in leagues:
+        league_code = league.split("-")[0]
+        fixtures_df = pd.read_csv(
+            TEAMS_DATA_DIR / f"{league_code}_fixtures.csv", index_col="team"
+        )
+        for team, row in fixtures_df.iterrows():
+            for gw, fixtures in row.dropna().items():
+                for fixture in ast.literal_eval(fixtures):
+                    opponent, side = fixture.rsplit("-", maxsplit=1)
+                    if side == "H":
+                        weeks[(league, team, opponent)] = int(gw)
+    return weeks
+
+
+@cache
+def _load_schedule() -> pd.DataFrame:
+    """
+    Season schedule in the same shape as sd.Sofascore.read_schedule():
+    fixtures and dates from FotMob, scores from football-data.co.uk (MatchHistory),
+    gameweeks from the fixtures csv files.
+    """
+    schedule_df = pd.concat(
+        [read_fotmob_schedule(league) for league in leagues], ignore_index=True
+    )
+    schedule_df["season"] = f"{season % 100:02d}{(season + 1) % 100:02d}"
+
+    mh = sd.MatchHistory(leagues=leagues, seasons=season).read_games()
+    results_df = (
+        mh.reset_index()[["league", "home_team", "away_team", "FTHG", "FTAG"]]
+        .rename(columns={"FTHG": "home_score", "FTAG": "away_score"})
+        .dropna()
+    )
+    results_df[["home_team", "away_team"]] = results_df[
+        ["home_team", "away_team"]
+    ].replace(team_name_map)
+    check_team_names(results_df, "football-data.co.uk")
+
+    keys = ["league", "home_team", "away_team"]
+    schedule_df = schedule_df.merge(results_df, on=keys, how="left", indicator=True)
+    matched = (schedule_df["_merge"] == "both").sum()
+    if matched != len(results_df):
+        raise ValueError(
+            f"Only {matched} of {len(results_df)} football-data.co.uk results matched a FotMob fixture."
+        )
+
+    weeks = read_weeks()
+    schedule_df["week"] = [weeks.get(key) for key in schedule_df[keys].itertuples(index=False)]
+    missing = schedule_df.loc[schedule_df["week"].isna(), keys]
+    if not missing.empty:
+        raise ValueError(
+            f"No gameweek in the fixtures csv for:\n{missing.to_string(index=False)}"
+        )
+    schedule_df["week"] = schedule_df["week"].astype(int)
+
+    schedule_df["game"] = (
+        schedule_df["date"].dt.strftime("%Y-%m-%d")
+        + " "
+        + schedule_df["home_team"]
+        + "-"
+        + schedule_df["away_team"]
+    )
+    schedule_df.set_index(["league", "season", "game"], inplace=True)
+    schedule_df.sort_index(inplace=True)
+    return schedule_df[
+        ["week", "date", "home_team", "away_team", "home_score", "away_score"]
+    ]
+
+
+def read_schedule(league: str | None = None) -> pd.DataFrame:
+    """Unplayed matches have NaN scores. Pass a league to keep only its matches."""
+    schedule = _load_schedule()
+    if league:
+        schedule = schedule.loc[schedule.index.get_level_values("league") == league]
+    return schedule.copy()
+
+
 def get_gameweek(type=None) -> dict:
-    sofascore = sd.Sofascore(leagues=leagues, seasons=season)
-    schedule = sofascore.read_schedule(force_cache=True)
+    schedule = read_schedule()
     today = date.today().isoformat()
     gameweeks = {}
 
